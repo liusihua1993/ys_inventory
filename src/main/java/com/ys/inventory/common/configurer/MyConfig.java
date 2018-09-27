@@ -1,4 +1,4 @@
-package com.mlink.base.common.configurer;
+package com.ys.inventory.common.configurer;
 
 import org.springframework.context.annotation.Configuration;
 

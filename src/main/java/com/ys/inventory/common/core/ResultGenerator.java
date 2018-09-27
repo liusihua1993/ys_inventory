@@ -1,4 +1,4 @@
-package com.mlink.base.common.core;
+package com.ys.inventory.common.core;
 
 /**
  * 响应结果生成工具

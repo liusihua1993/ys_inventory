@@ -1,4 +1,4 @@
-package com.mlink.base.common.core;
+package com.ys.inventory.common.core;
 
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiModel;

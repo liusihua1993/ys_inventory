@@ -1,4 +1,4 @@
-package com.mlink.base.common.utils;
+package com.ys.inventory.common.utils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;

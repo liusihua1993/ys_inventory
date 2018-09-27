@@ -16,13 +16,13 @@ import java.util.*;
 public class CodeGenerator {
     //JDBC配置，请修改为你项目的实际配置
 
-    private static final String JDBC_URL = "jdbc:mysql://xx.xx.xx.xx:3306/qinghui?useUnicode=true&characterEncoding=UTF-8";
-    private static final String JDBC_USERNAME = "xx";
-    private static final String JDBC_PASSWORD = "xx";
+    private static final String JDBC_URL = "jdbc:mysql://47.104.172.218:3306/ys?useUnicode=true&characterEncoding=UTF-8";
+    private static final String JDBC_USERNAME = "root";
+    private static final String JDBC_PASSWORD = "4e3w4s3a";
 
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
     // 包名需要根据实际进行配置
-    private static final String BASE_PACKAGE ="com.mlink.base";
+    private static final String BASE_PACKAGE ="com.ys.inventory";
 
 
     private static final String PROJECT_PATH = System.getProperty("user.dir")+"/";//项目在硬盘上的基础路径
@@ -36,13 +36,11 @@ public class CodeGenerator {
     private static final String PACKAGE_PATH_SERVICE =  BASE_PACKAGE + ".service";
     private static final String PACKAGE_PATH_CONTROLLER =  BASE_PACKAGE + ".controller";
 
-    private static final String AUTHOR = "fudazhi";//@author
+    private static final String AUTHOR = "liusihua";//@author
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-
-
-        genCode("test","测试类");
+//       genCode("product","产品表");
 
          // 只生成model,MAPPER
 //        genModelAndMapper("survey_wx_user",null, true, "测试类");

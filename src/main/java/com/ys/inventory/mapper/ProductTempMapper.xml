@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.inventory.mapper.ProductTempMapper">
+    <resultMap id="BaseResultMap" type="com.ys.inventory.entity.ProductTemp">
+        <id column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
+        <result column="product_temp_name" jdbcType="VARCHAR" property="productTempName"/>
+        <result column="product_temp_describe" jdbcType="VARCHAR" property="productTempDescribe"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="create_people" jdbcType="VARCHAR" property="createPeople"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <collection property="productTempMaterialList" ofType="com.ys.inventory.entity.ProductTempMaterial">
+            <id column="product_temp_material_id" jdbcType="VARCHAR" property="productTempMaterialId"/>
+            <result column="ptm_product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
+            <result column="material_id" jdbcType="VARCHAR" property="materialId"/>
+            <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
+            <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.ys.inventory.entity.ProductTemp">
+    insert into product_temp (product_temp_id, product_temp_name, product_temp_describe, 
+      create_time, create_people, update_time, 
+      deleteFlag)
+    values (#{productTempId,jdbcType=VARCHAR}, #{productTempName,jdbcType=VARCHAR}, #{productTempDescribe,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{createPeople,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, 
+      #{delete_flag,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.ProductTemp">
+        update product_temp
+        <set>
+            <if test="productTempName != null">product_temp_name=#{productTempName},</if>
+            <if test="productTempDescribe != null">product_temp_describe=#{productTempDescribe},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag=#{deleteFlag},</if>
+        </set>
+        where product_temp_id = #{productTempId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        pt.product_temp_id,
+        pt.product_temp_name,
+        pt.product_temp_describe,
+        pt.create_time,
+        pt.create_people,
+        pt.update_time,
+        ptm.material_id,
+        ptm.material_num,
+        ptm.product_temp_id AS ptm_product_temp_id,
+        ptm.product_temp_material_id,
+        m.material_name
+    FROM
+        product_temp pt
+        LEFT JOIN product_temp_material ptm ON pt.product_temp_id = ptm.product_temp_id
+        LEFT JOIN material m ON ptm.material_id = m.material_id
+    WHERE
+        pt.product_temp_id = #{productTempId,jdbcType=VARCHAR}
+  </select>
+
+    <select id="checkProductTempExistByProductTempName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_people,
+    update_time, delete_flag
+    from product_temp
+    where product_temp_name = #{productTempName,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_people, 
+    update_time
+    from product_temp WHERE delete_flag = '0' order by create_time desc
+  </select>
+</mapper>

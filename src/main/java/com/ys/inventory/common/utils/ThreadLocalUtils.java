@@ -1,4 +1,4 @@
-package com.mlink.base.common.utils;
+package com.ys.inventory.common.utils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.mlink.base.common.core;
+package com.ys.inventory.common.core;
 
 /**
  * 响应码枚举，参考HTTP状态码的语义

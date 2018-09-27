@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.inventory.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.ys.inventory.entity.Product">
+        <id column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+        <result column="product_describe" jdbcType="VARCHAR" property="productDescribe"/>
+        <result column="product_num" jdbcType="INTEGER" property="productNum"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ys.inventory.entity.Product">
+    insert into product (product_id, product_temp_id, product_name, 
+      product_describe, product_num, create_time, 
+      create_user, update_time, delete_flag
+      )
+    values (#{productId,jdbcType=VARCHAR}, #{productTempId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productDescribe,jdbcType=VARCHAR}, #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
+      #{createUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, #{deleteFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.Product">
+        update product
+        <set>
+            <if test="productName != null">product_name=#{productName},</if>
+            <if test="productDescribe != null">product_describe=#{productDescribe},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag=#{deleteFlag},</if>
+        </set>
+        where product_id = #{productId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+          SELECT
+          p.product_id,
+          p.product_temp_id,
+          p.product_name,
+          p.product_describe,
+          p.product_num,
+          p.create_time,
+          p.create_user,
+          pt.product_temp_name
+      FROM
+          product p LEFT JOIN product_temp pt ON p.product_temp_id = pt.product_temp_id
+      WHERE
+          product_id = #{productId,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select product_id, product_temp_id, product_name, product_describe, product_num, 
+    create_time, create_user, update_time, delete_flag
+    from product
+  </select>
+</mapper>

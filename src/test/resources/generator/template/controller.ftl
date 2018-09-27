@@ -21,7 +21,8 @@ import java.util.List;
 
 
 /**
-* Created by ${author} on ${date}.
+* @author ${author}.
+* @date ${date}.
 */
 @Api(value="${modelNameUpperCamel} ",tags={"${baseRequestMapping}"})
 @RestController
