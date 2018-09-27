@@ -33,6 +33,7 @@ import java.util.Properties;
 
 /**
  * Mybatis 配置
+ *
  * @author wyh
  * @version 2017/10/18.
  */
@@ -41,17 +42,17 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class MybatisConfig implements TransactionManagementConfigurer {
 
-//    @Value("${mybatis.mapperLocations}")
-    private String mapperLocations = "com.**.**.entity";
-//    private String typeAliasesPackage = "classpath:com/mlink/base/mapper/*.xml";
-//    @Value("${mybatis.typeAliasesPackage}")
-    private String typeAliasesPackage = "classpath:com/**/**/mapper/*.xml";
+    @Value("${mybatis.mapperLocations}")
+    private String mapperLocations;
+
+    @Value("${mybatis.typeAliasesPackage}")
+    private String typeAliasesPackage;
 
     @Autowired
     DataSource dataSource;
 
     @Bean(name = "sqlSessionFactory")
-    SqlSessionFactory sqlSessionFactory(){
+    SqlSessionFactory sqlSessionFactory() {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
@@ -65,7 +66,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
         //分页插件
         bean.setPlugins(new Interceptor[]{pageInterceptor()});
 
-        org.apache.ibatis.session.Configuration configuration=new org.apache.ibatis.session.Configuration();
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         //使用jdbc的getGeneratedKeys获取数据库自增主键值
         configuration.setUseGeneratedKeys(true);
         //使用列别名替换列名 select user as UserBean
@@ -91,7 +92,7 @@ public class MybatisConfig implements TransactionManagementConfigurer {
     /**
      * 使别名配置支持通配符，并且可以有多个
      */
-    private void setTypeAliasesPackage(SqlSessionFactoryBean sqlSessionFactoryBean,String typeAliasesPackage) {
+    private void setTypeAliasesPackage(SqlSessionFactoryBean sqlSessionFactoryBean, String typeAliasesPackage) {
         final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
         typeAliasesPackage = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
                 ClassUtils.convertClassNameToResourcePath(typeAliasesPackage) + "/" + DEFAULT_RESOURCE_PATTERN;
