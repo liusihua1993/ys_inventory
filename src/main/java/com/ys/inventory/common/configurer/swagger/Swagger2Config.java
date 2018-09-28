@@ -1,4 +1,4 @@
-package com.ys.inventory.common.configurer;
+package com.ys.inventory.common.configurer.swagger;
 
 
 import org.springframework.context.annotation.Bean;

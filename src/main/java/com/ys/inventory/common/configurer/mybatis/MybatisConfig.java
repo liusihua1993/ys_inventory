@@ -1,4 +1,4 @@
-package com.ys.inventory.common.configurer;
+package com.ys.inventory.common.configurer.mybatis;
 
 import com.github.pagehelper.PageInterceptor;
 import org.apache.commons.lang3.StringUtils;
