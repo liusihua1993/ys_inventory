@@ -15,6 +15,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MaterialUpdateVo extends MaterialInsertVo{
+public class MaterialUpdateVO extends MaterialInsertVO {
 
 }

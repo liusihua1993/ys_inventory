@@ -9,9 +9,9 @@ import com.ys.inventory.common.utils.UUIDUtil;
 import com.ys.inventory.common.validator.Validator;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.mapper.MaterialMapper;
-import com.ys.inventory.vo.MaterialInsertVo;
+import com.ys.inventory.vo.MaterialInsertVO;
 import com.ys.inventory.vo.MaterialSearchVO;
-import com.ys.inventory.vo.MaterialUpdateVo;
+import com.ys.inventory.vo.MaterialUpdateVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class MaterialService {
     @Autowired(required = false)
     private MaterialMapper materialMapper;
 
-    public void insert(MaterialInsertVo vo) {
+    public void insert(MaterialInsertVO vo) {
         // 插入验证
         ValidatorInsert(vo);
         Map<String, String> mapperMap = new HashMap<>(1);
@@ -49,7 +49,7 @@ public class MaterialService {
         }
     }
 
-    private Material createInsertMaterial(MaterialInsertVo vo) {
+    private Material createInsertMaterial(MaterialInsertVO vo) {
         Material material = new Material();
         material.setMaterialNum(Integer.valueOf(vo.getMaterialNum()));
         material.setMaterialName(vo.getMaterialName());
@@ -59,7 +59,7 @@ public class MaterialService {
         return material;
     }
 
-    public void updateMaterial(MaterialUpdateVo vo) {
+    public void updateMaterial(MaterialUpdateVO vo) {
         Map<String, String> mapperMap = new HashMap<>(2);
         mapperMap.put("materialId", vo.getMaterialId());
         mapperMap.put("materialName", vo.getMaterialName());
@@ -74,7 +74,7 @@ public class MaterialService {
 
     }
 
-    private Material createUpdateMaterial(MaterialUpdateVo vo) {
+    private Material createUpdateMaterial(MaterialUpdateVO vo) {
         Material material = new Material();
         material.setMaterialId(vo.getMaterialId());
         material.setMaterialName(vo.getMaterialName());
@@ -83,10 +83,10 @@ public class MaterialService {
         return material;
     }
 
-    private void ValidatorInsert(MaterialInsertVo vo) {
+    private void ValidatorInsert(MaterialInsertVO vo) {
         // 原料名称
         Validator.notNull(vo.getMaterialName(), "原料名称不能为空");
-        checkLength(vo.getMaterialName(), 100, "公司名称长度不得超过 100 个字符");
+        checkLength(vo.getMaterialName(), 30, "公司名称长度不得超过 100 个字符");
         // 原料数量
         Validator.notNull(vo.getMaterialNum(), "个数不能为空");
         if (!vo.getMaterialNum().matches(Constants.REGEX_POSITIVE_INTEGER) || vo.getMaterialNum().length() > Integer.valueOf(Constants.SIX)) {

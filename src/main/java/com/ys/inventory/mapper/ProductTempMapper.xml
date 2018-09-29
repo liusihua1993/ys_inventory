@@ -17,13 +17,26 @@
         </collection>
     </resultMap>
 
-    <insert id="insert" parameterType="com.ys.inventory.entity.ProductTemp">
-    insert into product_temp (product_temp_id, product_temp_name, product_temp_describe, 
-      create_time, create_user, update_time,
-      deleteFlag)
-    values (#{productTempId,jdbcType=VARCHAR}, #{productTempName,jdbcType=VARCHAR}, #{productTempDescribe,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=BIGINT}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT},
-      #{delete_flag,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="ProductTemp">
+    insert into product_temp (
+      product_temp_id,
+      product_temp_name,
+      product_temp_describe,
+      create_time,
+      create_user,
+      update_time,
+      update_user,
+      delete_flag
+      ) values (
+      #{productTempId},
+      #{productTempName},
+      #{productTempDescribe},
+      now(),
+      #{createUser},
+      now(),
+      #{createUser},
+      '0'
+      )
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.ProductTemp">
         update product_temp
@@ -56,12 +69,23 @@
         pt.product_temp_id = #{productTempId,jdbcType=VARCHAR}
   </select>
 
-    <select id="checkProductTempExistByProductTempName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
-    update_time, delete_flag
+    <select id="getProductTempByName" parameterType="String" resultType="ProductTemp">
+    select
+    product_temp_id,
+    product_temp_name,
+    product_temp_describe,
+    create_time,
+    create_user,
+    update_time
     from product_temp
-    where product_temp_name = #{productTempName,jdbcType=VARCHAR}
-  </select>
+    where
+    <if test="productTempId == null">
+        product_temp_name = #{productTempName} and delete_flag = '0'
+    </if>
+    <if test="productTempId != null">
+        product_temp_name = #{productTempName} and productTemp_id !=#{productTempId} and delete_flag = '0'
+    </if>
+    </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
     select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,

@@ -14,12 +14,30 @@
     </delete>
 
     <insert id="insertBatch" parameterType="java.util.List">
-        replace into product_temp_material (product_temp_material_id, product_temp_id,
-        material_id, material_num)
+        replace into product_temp_material (
+        product_temp_material_id,
+        product_temp_id,
+        material_id,
+        material_num,
+        create_time,
+        create_user,
+        update_time,
+        update_user,
+        delete_flag
+        )
         values
         <foreach item="st" collection="list" open="" separator="," close="">
-            (#{st.productTempMaterialId,jdbcType=VARCHAR}, #{st.productTempId,jdbcType=VARCHAR},
-            #{st.materialId,jdbcType=VARCHAR}, #{st.materialNum,jdbcType=VARCHAR})
+            (
+            #{st.productTempMaterialId},
+            #{st.productTempId},
+            #{st.materialId},
+            #{st.materialNum},
+            now(),
+            #{st.createUser},
+            now(),
+            #{st.createUser},
+            '0'
+            )
         </foreach>
     </insert>
 

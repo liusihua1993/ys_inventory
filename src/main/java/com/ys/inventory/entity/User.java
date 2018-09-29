@@ -14,8 +14,23 @@ import org.apache.ibatis.type.Alias;
 @Setter
 @Alias("User")
 public class User {
+    /**
+     * 主键
+     */
     private String userId;
+
+    /**
+     * 姓名
+     */
     private String userName;
+
+    /**
+     * 密码
+     */
     private String password;
+
+    /**
+     * 手机号
+     */
     private String phone;
 }

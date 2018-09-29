@@ -5,9 +5,9 @@ import com.ys.inventory.common.core.Result;
 import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.service.MaterialService;
-import com.ys.inventory.vo.MaterialInsertVo;
+import com.ys.inventory.vo.MaterialInsertVO;
 import com.ys.inventory.vo.MaterialSearchVO;
-import com.ys.inventory.vo.MaterialUpdateVo;
+import com.ys.inventory.vo.MaterialUpdateVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class MaterialController {
     @ApiOperation(value = "添加原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
     @PostMapping
-    public void add(@ApiParam(value = "待插入的原料信息", required = true) @RequestBody MaterialInsertVo vo) {
+    public void add(@ApiParam(value = "待插入的原料信息", required = true) @RequestBody MaterialInsertVO vo) {
         materialService.insert(vo);
     }
 
@@ -41,7 +41,7 @@ public class MaterialController {
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
     @PutMapping(value = "/{materialId}/updateMaterial")
     public void update(@ApiParam(value = "原料id", required = true) @PathVariable String materialId,
-                         @ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVo vo) {
+                         @ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVO vo) {
         vo.setMaterialId(materialId);
         materialService.updateMaterial(vo);
     }
