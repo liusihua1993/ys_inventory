@@ -40,7 +40,7 @@ public class MaterialService {
         Material material = materialMapper.getMaterialByName(mapperMap);
         if (material != null) {
             //抛异常不能新增
-            throw new BusinessException("203","已存在相同原料,请尝试添加原料数量.");
+            throw new BusinessException("已存在相同原料,请尝试添加原料数量.");
         } else {
             materialMapper.insert(createInsertMaterial(vo));
         }
@@ -94,14 +94,6 @@ public class MaterialService {
         checkLength(vo.getMaterialDescription(), 255, "原料描述长度不得超过 255 个字符");
     }
 
-    public void deleteByPrimaryKey(String id) {
-//        Material material = new Material();
-//        material.setMaterialId(id);
-//        material.setDeleteFlag("1");
-//        material.setUpdateTime(System.currentTimeMillis());
-//        materialMapper.updateByPrimaryKey(material);
-    }
-
     public Material selectByPrimaryKey(String id) {
         return materialMapper.selectByPrimaryKey(id);
     }
@@ -114,6 +106,19 @@ public class MaterialService {
         if (StringUtils.isNotEmpty(str) && str.length() > length) {
             throw new BusinessException(message);
         }
+    }
+
+    public Material get(String materialId) {
+        return materialMapper.get(materialId);
+    }
+
+    public void delete(String materialId, String updateTime) {
+        Material material = materialMapper.get(materialId);
+        //Validator.equals(updateTime, material.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
+        Map<String, String> mapperParam = new HashMap<>(2);
+        mapperParam.put("materialId", materialId);
+        mapperParam.put("updateUser", SecurityUtil.getUserId());
+        materialMapper.delete(mapperParam);
     }
 }
 

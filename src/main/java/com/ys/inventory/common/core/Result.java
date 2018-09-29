@@ -51,7 +51,7 @@ public final class Result<T> {
      */
     public static <T> Result ok(T content) {
         Result<T> result = new Result<>();
-        result.setCode(0);
+        result.setCode(200);
         result.setData(content);
         return result;
     }

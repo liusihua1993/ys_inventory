@@ -36,4 +36,16 @@ public interface MaterialMapper {
      */
     Material getMaterialByName(Map<String, String> mapperMap);
 
+    /**
+     * 获取原料信息
+     * @param materialId
+     * @return
+     */
+    Material get(String materialId);
+
+    /**
+     * 删除原料
+     * @param mapperParam
+     */
+    void delete(Map<String, String> mapperParam);
 }
