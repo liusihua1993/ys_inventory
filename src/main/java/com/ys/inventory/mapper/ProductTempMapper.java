@@ -12,11 +12,21 @@ public interface ProductTempMapper {
      */
     int insert(ProductTemp record);
 
-    ProductTemp selectByPrimaryKey(String productTempId);
+    /**
+     * 获取详情
+     * @param productTempId
+     * @return
+     */
+    ProductTemp get(String productTempId);
 
     List<ProductTemp> selectAll();
 
-    int updateByPrimaryKey(ProductTemp record);
+    /**
+     * 修改产品模板
+     * @param record
+     * @return
+     */
+    int updateProductTemp(ProductTemp record);
 
     /**
      * 查看是否存在同名模板

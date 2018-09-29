@@ -8,9 +8,9 @@
         <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
     </resultMap>
 
-    <delete id="deleteForUpdate" parameterType="java.lang.String">
+    <delete id="deleteForUpdate" parameterType="String">
          delete from product_temp_material
-        where product_temp_id = #{productTempId,jdbcType=VARCHAR}
+        where product_temp_id = #{productTempId}
     </delete>
 
     <insert id="insertBatch" parameterType="java.util.List">

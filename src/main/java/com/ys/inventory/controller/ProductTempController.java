@@ -1,17 +1,16 @@
 package com.ys.inventory.controller;
 
 import com.ys.inventory.common.core.Result;
+import com.ys.inventory.entity.ProductTemp;
 import com.ys.inventory.mapper.ProductTempMapper;
 import com.ys.inventory.service.ProductTempService;
 import com.ys.inventory.vo.ProductTempInsertVO;
+import com.ys.inventory.vo.ProductTempUpdateVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -41,14 +40,22 @@ public class ProductTempController {
 
     }
 
-//    @ApiOperation(value = "更新产品模板")
-//    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
-//    @PostMapping("/update")
-//    public Result update(@ApiParam(value = "ProductTemp json对象") @RequestBody ProductTemp productTemp) {
-//        productTempService.updateByPrimaryKey(productTemp);
-//        return ResultGenerator.genSuccessResult();
-//    }
-//
+    @ApiOperation(value = "更新产品模板")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @PutMapping(value = "/{productTempId}/updateProductTemp")
+    public void update(@ApiParam(value = "productTempId") @PathVariable String productTempId,
+            @ApiParam(value = "ProductTemp json对象") @RequestBody ProductTempUpdateVO vo) {
+        vo.setProductTempId(productTempId);
+        productTempService.updateProductTemp(vo);
+    }
+
+    @ApiOperation(value = "根据主键查询产品模板")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = ProductTemp.class)})
+    @GetMapping("/{productTempId}")
+    public ProductTemp get(@ApiParam(value = "主键id") @PathVariable String productTempId) {
+        return productTempService.get(productTempId);
+    }
+
 //    @ApiOperation(value = "根据主键删除产品模板")
 //    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
 //    @GetMapping("/delete")
@@ -56,14 +63,8 @@ public class ProductTempController {
 //        productTempService.deleteByPrimaryKey(id);
 //        return ResultGenerator.genSuccessResult();
 //    }
-//
-//    @ApiOperation(value = "根据主键查询产品模板")
-//    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = ProductTemp.class)})
-//    @GetMapping("/detail")
-//    public Result detail(@ApiParam(value = "主键id") @RequestParam String id) {
-//        ProductTemp productTemp = productTempService.selectByPrimaryKey(id);
-//        return ResultGenerator.genSuccessResult(productTemp);
-//    }
+
+
 //
 //
 //    @ApiOperation(value = "查询全部产品模板")

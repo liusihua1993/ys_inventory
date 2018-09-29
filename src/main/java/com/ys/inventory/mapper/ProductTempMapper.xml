@@ -5,9 +5,10 @@
         <id column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
         <result column="product_temp_name" jdbcType="VARCHAR" property="productTempName"/>
         <result column="product_temp_describe" jdbcType="VARCHAR" property="productTempDescribe"/>
-        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
-        <result column="create_user" jdbcType="VARCHAR" property="updateUser"/>
-        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <result column="create_time"  property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
         <collection property="productTempMaterialList" ofType="com.ys.inventory.entity.ProductTempMaterial">
             <id column="product_temp_material_id" jdbcType="VARCHAR" property="productTempMaterialId"/>
             <result column="ptm_product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
@@ -38,17 +39,20 @@
       '0'
       )
   </insert>
-    <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.ProductTemp">
+    <update id="updateProductTemp" parameterType="ProductTemp">
         update product_temp
         <set>
-            <if test="productTempName != null">product_temp_name=#{productTempName},</if>
-            <if test="productTempDescribe != null">product_temp_describe=#{productTempDescribe},</if>
-            <if test="updateTime != null">update_time=#{updateTime},</if>
-            <if test="deleteFlag != null">delete_flag=#{deleteFlag},</if>
+            <if test="productTempName != null">
+                product_temp_name=#{productTempName},
+            </if>
+            <if test="productTempDescribe != null">
+                product_temp_describe=#{productTempDescribe},
+            </if>
+            update_time = now()
         </set>
-        where product_temp_id = #{productTempId,jdbcType=VARCHAR}
+        where product_temp_id = #{productTempId}
     </update>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="get" parameterType="String" resultMap="BaseResultMap">
         SELECT
         pt.product_temp_id,
         pt.product_temp_name,
@@ -56,6 +60,7 @@
         pt.create_time,
         pt.create_user,
         pt.update_time,
+        pt.update_user,
         ptm.material_id,
         ptm.material_num,
         ptm.product_temp_id AS ptm_product_temp_id,
@@ -83,7 +88,7 @@
         product_temp_name = #{productTempName} and delete_flag = '0'
     </if>
     <if test="productTempId != null">
-        product_temp_name = #{productTempName} and productTemp_id !=#{productTempId} and delete_flag = '0'
+        product_temp_name = #{productTempName} and product_temp_id !=#{productTempId} and delete_flag = '0'
     </if>
     </select>
 

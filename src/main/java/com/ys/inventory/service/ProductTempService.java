@@ -5,9 +5,11 @@ import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.UUIDUtil;
 import com.ys.inventory.common.validator.Validator;
 import com.ys.inventory.entity.ProductTemp;
+import com.ys.inventory.entity.ProductTempMaterial;
 import com.ys.inventory.mapper.ProductTempMapper;
 import com.ys.inventory.mapper.ProductTempMaterialMapper;
 import com.ys.inventory.vo.ProductTempInsertVO;
+import com.ys.inventory.vo.ProductTempUpdateVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,42 @@ public class ProductTempService {
         }
     }
 
+    public void updateProductTemp(ProductTempUpdateVO vo) {
+        Map<String, String> mapperMap = new HashMap<>(2);
+        mapperMap.put("productTempId", vo.getProductTempId());
+        mapperMap.put("productTempName", vo.getProductTempName());
+        //查看是否有同名的
+        ProductTemp productTemp = productTempMapper.getProductTempByName(mapperMap);
+        if (productTemp != null) {
+            //抛异常不能修改
+            throw new BusinessException("已存在相同模板信息,修改失败.");
+        } else {
+            //修改产品模板
+            productTemp = createProductTempUpdate(vo);
+            productTempMapper.updateProductTemp(productTemp);
+            //删除产品模板属性
+            productTempMaterialMapper.deleteForUpdate(productTemp.getProductTempId());
+            //添加产品模板属性
+            List<ProductTempMaterial> productTempMaterialList = vo.getProductTempMaterialList();
+            for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
+                productTempMaterial.setProductTempMaterialId(UUIDUtil.getUUID());
+                productTempMaterial.setProductTempId(productTemp.getProductTempId());
+                productTempMaterial.setCreateUser(SecurityUtil.getUserId());
+            }
+            productTempMaterialMapper.insertBatch(productTempMaterialList);
+        }
+
+    }
+
+    private ProductTemp createProductTempUpdate(ProductTempUpdateVO vo) {
+        ProductTemp productTemp = new ProductTemp();
+        productTemp.setProductTempId(vo.getProductTempId());
+        productTemp.setProductTempName(vo.getProductTempName());
+        productTemp.setProductTempDescribe(vo.getProductTempDescribe());
+        productTemp.setUpdateUser(SecurityUtil.getUserId());
+        return productTemp;
+    }
+
     private ProductTemp createProductTempInsert(ProductTempInsertVO vo) {
         ProductTemp productTemp = new ProductTemp();
         productTemp.setProductTempId(UUIDUtil.getUUID());
@@ -78,30 +116,6 @@ public class ProductTempService {
         checkLength(vo.getProductTempDescribe(), 255, "模板描述长度不得超过 255 个字符");
     }
 
-
-//    public void updateByPrimaryKey(ProductTemp productTemp) {
-//        //修改产品模板
-//        productTemp.setUpdateTime(System.currentTimeMillis());
-//        productTempMapper.updateByPrimaryKey(productTemp);
-//        //删除产品模板属性
-//        productTempMaterialMapper.deleteForUpdate(productTemp.getProductTempId());
-//        //添加产品模板属性
-//        productTempMaterialMapper.insertBatch(productTemp.getProductTempMaterialList());
-//    }
-
-//
-//    public void deleteByPrimaryKey(String id) {
-//        ProductTemp productTemp = new ProductTemp();
-//        productTemp.setDeleteFlag("1");
-//        productTemp.setProductTempId(id);
-//        productTemp.setUpdateTime(System.currentTimeMillis());
-//        productTempMapper.updateByPrimaryKey(productTemp);
-//    }
-
-    public ProductTemp selectByPrimaryKey(String id) {
-        return productTempMapper.selectByPrimaryKey(id);
-    }
-
     public List<ProductTemp> selectAll() {
         return productTempMapper.selectAll();
     }
@@ -111,6 +125,17 @@ public class ProductTempService {
             throw new BusinessException(message);
         }
     }
+
+    public ProductTemp get(String productTempId) {
+        return productTempMapper.get(productTempId);
+    }
+    //
+//    public void deleteByPrimaryKey(String id) {
+//        ProductTemp productTemp = new ProductTemp();
+//        productTemp.setDeleteFlag("1");
+//        productTemp.setProductTempId(id);
+//        productTemp.setUpdateTime(System.currentTimeMillis());
+//        productTempMapper.updateByPrimaryKey(productTemp);
 }
 
 
