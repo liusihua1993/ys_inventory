@@ -1,6 +1,7 @@
 package com.ys.inventory.mapper;
 
 import com.ys.inventory.entity.Material;
+import com.ys.inventory.vo.MaterialSearchVO;
 
 import java.util.List;
 import java.util.Map;
@@ -48,4 +49,11 @@ public interface MaterialMapper {
      * @param mapperParam
      */
     void delete(Map<String, String> mapperParam);
+
+    /**
+     * 查询原料信息列表
+     * @param material
+     * @return
+     */
+    List<Material> find(MaterialSearchVO material);
 }

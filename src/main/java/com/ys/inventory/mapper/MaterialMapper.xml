@@ -64,30 +64,30 @@
         and material_id = #{materialId}
     </update>
 
-    <select id="selectAll" resultMap="BaseResultMap">
-    select material_id, material_name, material_num, create_time, create_user,update_time
+    <select id="find" resultType="Material">
+    select material_id, material_name, material_num, create_time, create_user,update_time,update_user
     from material
     where delete_flag = '0'
     order by create_time desc
   </select>
 
     <select id="getMaterialByName" parameterType="map" resultType="Material">
-    select
-      material_id,
-      material_name,
-      material_num,
-      material_description,
-      create_time,
-      create_user,
-      update_time
-    from material
-    where
+        select
+        material_id,
+        material_name,
+        material_num,
+        material_description,
+        create_time,
+        create_user,
+        update_time
+        from material
+        where
         <if test="materialId == null">
-          material_name = #{materialName} and delete_flag = '0'
+            material_name = #{materialName} and delete_flag = '0'
         </if>
         <if test="materialId != null">
             material_name = #{materialName} and material_id !=#{materialId} and delete_flag = '0'
         </if>
 
-  </select>
+    </select>
 </mapper>

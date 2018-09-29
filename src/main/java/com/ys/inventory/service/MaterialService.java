@@ -1,13 +1,16 @@
 package com.ys.inventory.service;
 
+import com.github.pagehelper.PageHelper;
 import com.ys.inventory.common.exception.BusinessException;
 import com.ys.inventory.common.utils.Constants;
+import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.UUIDUtil;
 import com.ys.inventory.common.validator.Validator;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.mapper.MaterialMapper;
 import com.ys.inventory.vo.MaterialInsertVo;
+import com.ys.inventory.vo.MaterialSearchVO;
 import com.ys.inventory.vo.MaterialUpdateVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,11 +117,23 @@ public class MaterialService {
 
     public void delete(String materialId, String updateTime) {
         Material material = materialMapper.get(materialId);
-        //Validator.equals(updateTime, material.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
+        Validator.equals(updateTime, material.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
         Map<String, String> mapperParam = new HashMap<>(2);
         mapperParam.put("materialId", materialId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());
         materialMapper.delete(mapperParam);
+    }
+
+    /**
+     * 查询原料信息列表
+     * @param material
+     * @return
+     */
+    public Page<Material> find(MaterialSearchVO material) {
+        PageHelper.startPage(material);
+        //查询数据
+        List<Material> list = materialMapper.find(material);
+        return new Page<>(list);
     }
 }
 
