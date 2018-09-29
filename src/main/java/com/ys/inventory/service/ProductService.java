@@ -48,7 +48,7 @@ public class ProductService {
         for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
             Material material = materialMapper.selectByPrimaryKey(productTempMaterial.getMaterialId());
             material.setMaterialNum(material.getMaterialNum() - ((productTempMaterial.getMaterialNum()) * product.getProductNum()));
-            material.setUpdateTime(System.currentTimeMillis());
+           // material.setUpdateTime(System.currentTimeMillis());
             materialMapper.updateByPrimaryKey(material);
         }
     }

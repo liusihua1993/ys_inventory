@@ -25,7 +25,7 @@ public class ProductTemp {
     private Long createTime;
 
     @ApiModelProperty(value = "创建人")
-    private String createPeople;
+    private String updateUser;
 
     @ApiModelProperty(value = "修改时间")
     private Long updateTime;
@@ -68,12 +68,12 @@ public class ProductTemp {
         this.createTime = createTime;
     }
 
-    public String getCreatePeople() {
-        return createPeople;
+    public String getupdateUser() {
+        return updateUser;
     }
 
-    public void setCreatePeople(String createPeople) {
-        this.createPeople = createPeople;
+    public void setupdateUser(String updateUser) {
+        this.updateUser = updateUser;
     }
 
     public Long getUpdateTime() {

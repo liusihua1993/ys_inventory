@@ -6,7 +6,7 @@
         <result column="product_temp_name" jdbcType="VARCHAR" property="productTempName"/>
         <result column="product_temp_describe" jdbcType="VARCHAR" property="productTempDescribe"/>
         <result column="create_time" jdbcType="BIGINT" property="createTime"/>
-        <result column="create_people" jdbcType="VARCHAR" property="createPeople"/>
+        <result column="create_user" jdbcType="VARCHAR" property="updateUser"/>
         <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
         <collection property="productTempMaterialList" ofType="com.ys.inventory.entity.ProductTempMaterial">
             <id column="product_temp_material_id" jdbcType="VARCHAR" property="productTempMaterialId"/>
@@ -19,10 +19,10 @@
 
     <insert id="insert" parameterType="com.ys.inventory.entity.ProductTemp">
     insert into product_temp (product_temp_id, product_temp_name, product_temp_describe, 
-      create_time, create_people, update_time, 
+      create_time, create_user, update_time,
       deleteFlag)
     values (#{productTempId,jdbcType=VARCHAR}, #{productTempName,jdbcType=VARCHAR}, #{productTempDescribe,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=BIGINT}, #{createPeople,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT},
       #{delete_flag,jdbcType=VARCHAR})
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.ProductTemp">
@@ -41,7 +41,7 @@
         pt.product_temp_name,
         pt.product_temp_describe,
         pt.create_time,
-        pt.create_people,
+        pt.create_user,
         pt.update_time,
         ptm.material_id,
         ptm.material_num,
@@ -57,14 +57,14 @@
   </select>
 
     <select id="checkProductTempExistByProductTempName" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_people,
+    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
     update_time, delete_flag
     from product_temp
     where product_temp_name = #{productTempName,jdbcType=VARCHAR}
   </select>
 
     <select id="selectAll" resultMap="BaseResultMap">
-    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_people, 
+    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
     update_time
     from product_temp WHERE delete_flag = '0' order by create_time desc
   </select>

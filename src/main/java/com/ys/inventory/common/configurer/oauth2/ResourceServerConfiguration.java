@@ -30,19 +30,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .stateless(true);
     }
 
-//    @Autowired
-//    CustomAccessDecisionManager decisionManager;
-//
-//    @Autowired
-//    CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
-//
-//    @Bean
-//    public FilterSecurityInterceptor filterSecurityInterceptor() {
-//        FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
-//        filterSecurityInterceptor.setAccessDecisionManager(decisionManager);
-//        filterSecurityInterceptor.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
-//        return filterSecurityInterceptor;
-//    }
 
     /**
      * http安全配置
@@ -56,7 +43,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/companies/*/settings", "/companies/*/isExistCompany", "/files/*/_read", "/authInterfaces/*", "/companies/*", "/synchronization/*","/material/*")
+                .antMatchers("/swagger-ui.html")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

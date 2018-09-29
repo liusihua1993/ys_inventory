@@ -1,45 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ys.inventory.mapper.MaterialMapper">
-  <resultMap id="BaseResultMap" type="com.ys.inventory.entity.Material">
-    <id column="material_id" jdbcType="VARCHAR" property="materialId" />
-    <result column="material_name" jdbcType="VARCHAR" property="materialName" />
-    <result column="material_num" jdbcType="INTEGER" property="materialNum" />
-    <result column="create_time" jdbcType="BIGINT" property="createTime" />
-    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
-    <result column="create_people" jdbcType="VARCHAR" property="createPeople" />
-  </resultMap>
-  <insert id="insert" parameterType="com.ys.inventory.entity.Material">
-    insert into material (material_id, material_name, material_num, 
-      create_time, create_people,update_time,delete_flag)
-    values (#{materialId,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR}, #{materialNum,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=BIGINT}, #{createPeople,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.Material">
-    update material
-    <set>
-      <if test="materialName != null">material_name=#{materialName},</if>
-      <if test="materialNum != null">material_num=#{materialNum},</if>
-      <if test="updateTime != null">update_time=#{updateTime},</if>
-      <if test="deleteFlag != null">delete_flag=#{deleteFlag},</if>
-    </set>
-    where material_id = #{materialId,jdbcType=VARCHAR}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select material_id, material_name, material_num, create_time, create_people,update_time
+    <resultMap id="BaseResultMap" type="com.ys.inventory.entity.Material">
+        <id column="material_id" jdbcType="VARCHAR" property="materialId"/>
+        <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
+        <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <insert id="insert" parameterType="Material">
+        insert into material (
+            material_id,
+            material_name,
+            material_num,
+            material_description,
+            create_time,
+            create_user,
+            update_time,
+            update_user,
+            delete_flag
+            ) values (
+            #{materialId},
+            #{materialName},
+            #{materialNum},
+            #{materialDescription},
+            now(),
+            #{createUser},
+            now(),
+            #{createUser},
+            '0'
+            )
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="Material">
+        update material
+        <set>
+            <if test="materialName != null and materialName.length > 0">
+                material_name=#{materialName},
+            </if>
+            <if test="materialNum != null and materialNum.length > 0">
+                material_num=#{materialNum},
+            </if>
+            <if test="materialDescription != null and materialDescription.length > 0">
+                material_description=#{materialDescription},
+            </if>
+            update_time = now()
+        </set>
+        where material_id = #{materialId}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select material_id, material_name, material_num, create_time, create_user,update_time
     from material
     where material_id = #{materialId,jdbcType=VARCHAR}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select material_id, material_name, material_num, create_time, create_people,update_time
+    <select id="selectAll" resultMap="BaseResultMap">
+    select material_id, material_name, material_num, create_time, create_user,update_time
     from material
     where delete_flag = '0'
     order by create_time desc
   </select>
 
-  <select id="checkMaterialHasExistByName" parameterType="String" resultMap="BaseResultMap">
-    select material_id, material_name, material_num, create_time, create_people,update_time
+    <select id="getMaterialByName" parameterType="String" resultType="Material">
+    select
+      material_id,
+      material_name,
+      material_num,
+      material_description,
+      create_time,
+      create_user,
+      update_time
     from material
-    where material_name = #{materialName,jdbcType=VARCHAR}
+    where material_name = #{materialName}
   </select>
 </mapper>

@@ -1,52 +1,105 @@
 package com.ys.inventory.common.core;
 
-import com.alibaba.fastjson.JSON;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
- * 统一API响应结果封装
+ * @param <T> 请求响应结构体
+ * @author wyh
  */
+@Data
+public final class Result<T> {
 
-
-@ApiModel(value = "响应结果实体类")
-public class Result {
-    @ApiModelProperty(value = "返回结果码，200 成功、400失败、401未认证、500、服务器内部错误")
+    /**
+     * 响应状态码
+     * <p>
+     * 0表示成功
+     */
     private int code;
-    @ApiModelProperty(value = "返回结果描述")
-    private String message;
-    @ApiModelProperty(value = "返回结果数据")
-    private Object data;
 
-    public Result setCode(ResultCode resultCode) {
-        this.code = resultCode.code();
-        return this;
+    /**
+     * 响应提示信息
+     */
+    private String msg;
+
+    /**
+     * 开发者友好的异常信息
+     */
+    private String dev;
+
+    /**
+     * 响应时间戳
+     */
+    private long time = System.currentTimeMillis();
+
+    /**
+     * 响应内容
+     */
+    private T data;
+
+    /**
+     * 私有构造方法
+     */
+    private Result() {
     }
 
-    public int getCode() {
-        return code;
+    /**
+     * 成功的响应结果
+     *
+     * @param <T>     响应的内容类型
+     * @param content 响应内容
+     * @return 响应结果
+     */
+    public static <T> Result ok(T content) {
+        Result<T> result = new Result<>();
+        result.setCode(0);
+        result.setData(content);
+        return result;
     }
 
-    public String getMessage() {
-        return message;
+    /**
+     * 创建无内容的正常的响应
+     *
+     * @return 响应结果
+     */
+    public static Result ok() {
+        Result result = new Result<>();
+        result.setCode(0);
+        return result;
     }
 
-    public Result setMessage(String message) {
-        this.message = message;
-        return this;
+    public static <T>Result ok(int code, T content){
+        Result result = new Result<>();
+        result.setCode(code);
+        result.setData(content);
+        result.setMsg("SUCCESS");
+        return result;
     }
 
-    public Object getData() {
-        return data;
+    public static Result ok(int code){
+        Result result = new Result<>();
+        result.setCode(code);
+        result.setMsg("SUCCESS");
+        return result;
     }
 
-    public Result setData(Object data) {
-        this.data = data;
-        return this;
+    /**
+     * 错误的响应结果
+     *
+     * @param msg 错误消息
+     * @return 响应结果
+     */
+    public static Result error(int code, String msg) {
+        Result result = new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
     }
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
+    public static Result error(int code, String msg, Throwable ex) {
+        Result result = new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setDev(ex.getMessage());
+        return result;
     }
 }
