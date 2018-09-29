@@ -49,7 +49,7 @@ public class ProductService {
             Material material = materialMapper.selectByPrimaryKey(productTempMaterial.getMaterialId());
             material.setMaterialNum(material.getMaterialNum() - ((productTempMaterial.getMaterialNum()) * product.getProductNum()));
            // material.setUpdateTime(System.currentTimeMillis());
-            materialMapper.updateByPrimaryKey(material);
+            materialMapper.updateMaterial(material);
         }
     }
 

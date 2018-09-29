@@ -32,7 +32,7 @@
             '0'
             )
     </insert>
-    <update id="updateByPrimaryKey" parameterType="Material">
+    <update id="updateMaterial" parameterType="Material">
         update material
         <set>
             <if test="materialName != null and materialName.length > 0">
@@ -60,7 +60,7 @@
     order by create_time desc
   </select>
 
-    <select id="getMaterialByName" parameterType="String" resultType="Material">
+    <select id="getMaterialByName" parameterType="map" resultType="Material">
     select
       material_id,
       material_name,
@@ -70,6 +70,13 @@
       create_user,
       update_time
     from material
-    where material_name = #{materialName}
+    where
+        <if test="materialId == null">
+          material_name = #{materialName}
+        </if>
+        <if test="materialId != null">
+            material_name = #{materialName} and material_id !=#{materialId}
+        </if>
+
   </select>
 </mapper>

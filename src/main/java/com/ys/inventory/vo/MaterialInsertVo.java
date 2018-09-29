@@ -12,7 +12,7 @@ import lombok.ToString;
  * @date 2018/9/27
  * @Description
  */
-@ApiModel(value = "原料表")
+@ApiModel(value = "原料新增vo")
 @Getter
 @Setter
 @ToString

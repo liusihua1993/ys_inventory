@@ -3,6 +3,7 @@ package com.ys.inventory.mapper;
 import com.ys.inventory.entity.Material;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author LSH
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface MaterialMapper {
     /**
-     * 新增
+     * 新增原料信息
      * @param material
      * @return
      */
@@ -20,14 +21,19 @@ public interface MaterialMapper {
 
     Material selectByPrimaryKey(String materialId);
 
+    /**
+     * 修改原料信息
+     * @param material
+     */
+    void updateMaterial(Material material);
+
     List<Material> selectAll();
 
     /**
-     * 修改
-     * @param record
+     * 通过原料信息判断原料是否存在
+     * @param mapperMap
      * @return
      */
-    int updateByPrimaryKey(Material record);
+    Material getMaterialByName(Map<String, String> mapperMap);
 
-    Material getMaterialByName(String materialName);
 }

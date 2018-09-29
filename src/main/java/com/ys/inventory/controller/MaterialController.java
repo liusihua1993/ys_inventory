@@ -3,15 +3,12 @@ package com.ys.inventory.controller;
 import com.ys.inventory.common.core.Result;
 import com.ys.inventory.service.MaterialService;
 import com.ys.inventory.vo.MaterialInsertVo;
+import com.ys.inventory.vo.MaterialUpdateVo;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -34,16 +31,18 @@ public class MaterialController {
     @PostMapping
     public Result add(@ApiParam(value = "待插入的原料信息", required = true) @RequestBody MaterialInsertVo vo) {
         materialService.insert(vo);
-        return Result.ok();
+        return Result.ok(200);
     }
 
-//    @ApiOperation(value = "更新原料")
-//    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
-//    @PostMapping("/update")
-//    public Result update(@ApiParam (value="Material json对象") @RequestBody Material material) {
-//        materialService.updateByPrimaryKey(material);
-//        return ResultGenerator.genSuccessResult();
-//    }
+    @ApiOperation(value = "更新原料")
+    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @PutMapping(value = "/{materialId}/updateMaterial")
+    public Result update(@ApiParam(value = "原料id", required = true) @PathVariable String materialId,
+                         @ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVo vo) {
+        vo.setMaterialId(materialId);
+        materialService.updateMaterial(vo);
+        return Result.ok(200);
+    }
 //
 //    @ApiOperation(value = "根据主键删除原料")
 //    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
