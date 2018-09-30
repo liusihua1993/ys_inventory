@@ -137,6 +137,7 @@ public class ProductTempService {
         mapperParam.put("updateUser", SecurityUtil.getUserId());
         productTempMapper.delete(mapperParam);
         //todo 删除对应模板项
+        productTempMaterialMapper.delete(mapperParam);
     }
 
     public Page<ProductTemp> find(ProductTempSearchVO vo) {
