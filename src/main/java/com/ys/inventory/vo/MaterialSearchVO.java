@@ -14,21 +14,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MaterialSearchVO {
+public class MaterialSearchVO extends BaseSearchVO {
 
-    @ApiModelProperty(value="materialId",hidden = true)
+    @ApiModelProperty(value = "materialId", hidden = true)
     private String materialId;
 
     @ApiModelProperty(value = "原料名称")
     private String materialName;
-
-    @ApiModelProperty(value="分页参数，页码")
-    Integer page = 1;
-
-    @ApiModelProperty(value="分页参数，每页显示条数")
-    Integer limit = 0;
-
-    @ApiModelProperty(value="分页参数，排序")
-    private String sort = "";
-
 }

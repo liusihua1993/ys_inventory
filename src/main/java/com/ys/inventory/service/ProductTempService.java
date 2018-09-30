@@ -1,6 +1,8 @@
 package com.ys.inventory.service;
 
+import com.github.pagehelper.PageHelper;
 import com.ys.inventory.common.exception.BusinessException;
+import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.UUIDUtil;
 import com.ys.inventory.common.validator.Validator;
@@ -9,6 +11,7 @@ import com.ys.inventory.entity.ProductTempMaterial;
 import com.ys.inventory.mapper.ProductTempMapper;
 import com.ys.inventory.mapper.ProductTempMaterialMapper;
 import com.ys.inventory.vo.ProductTempInsertVO;
+import com.ys.inventory.vo.ProductTempSearchVO;
 import com.ys.inventory.vo.ProductTempUpdateVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,10 +119,6 @@ public class ProductTempService {
         checkLength(vo.getProductTempDescribe(), 255, "模板描述长度不得超过 255 个字符");
     }
 
-    public List<ProductTemp> selectAll() {
-        return productTempMapper.selectAll();
-    }
-
     private void checkLength(String str, int length, String message) {
         if (StringUtils.isNotEmpty(str) && str.length() > length) {
             throw new BusinessException(message);
@@ -129,13 +128,23 @@ public class ProductTempService {
     public ProductTemp get(String productTempId) {
         return productTempMapper.get(productTempId);
     }
-    //
-//    public void deleteByPrimaryKey(String id) {
-//        ProductTemp productTemp = new ProductTemp();
-//        productTemp.setDeleteFlag("1");
-//        productTemp.setProductTempId(id);
-//        productTemp.setUpdateTime(System.currentTimeMillis());
-//        productTempMapper.updateByPrimaryKey(productTemp);
+
+    public void delete(String productTempId, String updateTime) {
+        ProductTemp productTemp = productTempMapper.get(productTempId);
+        Validator.equals(updateTime, productTemp.getUpdateTime(), "模板信息已过时，可能已被其他人更新");
+        HashMap<String, String> mapperParam = new HashMap<>(2);
+        mapperParam.put("productTempId", productTempId);
+        mapperParam.put("updateUser", SecurityUtil.getUserId());
+        productTempMapper.delete(mapperParam);
+        //todo 删除对应模板项
+    }
+
+    public Page<ProductTemp> find(ProductTempSearchVO vo) {
+        PageHelper.startPage(vo);
+        //查询数据
+        List<ProductTemp> list = productTempMapper.find(vo);
+        return new Page<>(list);
+    }
 }
 
 

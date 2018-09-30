@@ -5,7 +5,7 @@
         <id column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
         <result column="product_temp_name" jdbcType="VARCHAR" property="productTempName"/>
         <result column="product_temp_describe" jdbcType="VARCHAR" property="productTempDescribe"/>
-        <result column="create_time"  property="createTime"/>
+        <result column="create_time" property="createTime"/>
         <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
@@ -75,26 +75,41 @@
   </select>
 
     <select id="getProductTempByName" parameterType="String" resultType="ProductTemp">
-    select
-    product_temp_id,
-    product_temp_name,
-    product_temp_describe,
-    create_time,
-    create_user,
-    update_time
-    from product_temp
-    where
-    <if test="productTempId == null">
-        product_temp_name = #{productTempName} and delete_flag = '0'
-    </if>
-    <if test="productTempId != null">
-        product_temp_name = #{productTempName} and product_temp_id !=#{productTempId} and delete_flag = '0'
-    </if>
+        select
+        product_temp_id,
+        product_temp_name,
+        product_temp_describe,
+        create_time,
+        create_user,
+        update_time
+        from product_temp
+        where
+        <if test="productTempId == null">
+            product_temp_name = #{productTempName} and delete_flag = '0'
+        </if>
+        <if test="productTempId != null">
+            product_temp_name = #{productTempName} and product_temp_id !=#{productTempId} and delete_flag = '0'
+        </if>
     </select>
 
-    <select id="selectAll" resultMap="BaseResultMap">
-    select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
-    update_time
-    from product_temp WHERE delete_flag = '0' order by create_time desc
-  </select>
+    <select id="find" resultType="ProductTemp">
+        select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
+        update_time
+        from product_temp
+        WHERE delete_flag = '0'
+        <if test="productTempName !=null">
+            and product_temp_name like concat('%', #{productTempName},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+    <update id="delete" parameterType="map">
+        update product_temp
+        set delete_flag = '1',
+        update_time = now(),
+        update_user = #{updateUser}
+        where
+        delete_flag = '0'
+        and product_temp_id = #{productTempId}
+    </update>
 </mapper>

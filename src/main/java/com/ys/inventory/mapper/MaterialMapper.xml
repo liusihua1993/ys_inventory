@@ -65,11 +65,14 @@
     </update>
 
     <select id="find" resultType="Material">
-    select material_id, material_name, material_num, create_time, create_user,update_time,update_user
-    from material
-    where delete_flag = '0'
-    order by create_time desc
-  </select>
+        select material_id, material_name, material_num, create_time, create_user,update_time,update_user
+        from material
+        where delete_flag = '0'
+        <if test="materialName !=null">
+            and material_name like concat('%', #{materialName},'%')
+        </if>
+        order by create_time desc
+    </select>
 
     <select id="getMaterialByName" parameterType="map" resultType="Material">
         select

@@ -1,6 +1,9 @@
 package com.ys.inventory.mapper;
 
 import com.ys.inventory.entity.ProductTemp;
+import com.ys.inventory.vo.ProductTempSearchVO;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,4 +37,17 @@ public interface ProductTempMapper {
      * @return
      */
     ProductTemp getProductTempByName(Map<String, String> mapperMap);
+
+    /**
+     * 删除产品模板
+     * @param mapperParam
+     */
+    void delete(HashMap<String, String> mapperParam);
+
+    /**
+     * 产品模板列表
+     * @param vo
+     * @return
+     */
+    List<ProductTemp> find(ProductTempSearchVO vo);
 }
