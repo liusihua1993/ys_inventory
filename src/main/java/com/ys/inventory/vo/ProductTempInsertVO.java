@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 @ToString
 public class ProductTempInsertVO {
+
     @ApiModelProperty(value = "主键")
     private String productTempId;
 

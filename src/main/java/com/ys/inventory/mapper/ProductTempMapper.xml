@@ -48,7 +48,8 @@
             <if test="productTempDescribe != null">
                 product_temp_describe=#{productTempDescribe},
             </if>
-            update_time = now()
+            update_time = now(),
+            update_user = #{updateUser}
         </set>
         where product_temp_id = #{productTempId}
     </update>

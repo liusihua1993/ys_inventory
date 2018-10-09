@@ -4,14 +4,12 @@ import com.ys.inventory.common.core.Result;
 import com.ys.inventory.mapper.ProductMapper;
 import com.ys.inventory.service.ProductService;
 import com.ys.inventory.vo.ProductInsertVO;
+import com.ys.inventory.vo.ProductUpdateVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -42,15 +40,16 @@ public class ProductController {
         productService.insert(vo);
     }
 
-    /*
+
     @ApiOperation(value = "更新Product")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
-    @PostMapping("/update")
-    public Result update(@ApiParam (value="Product json对象") @RequestBody Product product) {
-        productService.updateByPrimaryKey(product);
-        return ResultGenerator.genSuccessResult();
+    @PutMapping(value = "/{productId}/updateProduct")
+    public void update(@ApiParam(value = "产品id", required = true) @PathVariable String productId,
+                       @ApiParam(value = "待更新的产品", required = true) @RequestBody ProductUpdateVO vo) {
+        vo.setProductId(productId);
+        productService.updateProduct(vo);
     }
-
+/*
     @ApiOperation(value = "根据主键删除对象")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
     @GetMapping("/delete")

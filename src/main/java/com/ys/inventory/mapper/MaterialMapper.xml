@@ -44,7 +44,8 @@
             <if test="materialDescription != null and materialDescription.length > 0">
                 material_description=#{materialDescription},
             </if>
-            update_time = now()
+            update_time = now(),
+            update_user = #{updateUser}
         </set>
         where material_id = #{materialId}
     </update>

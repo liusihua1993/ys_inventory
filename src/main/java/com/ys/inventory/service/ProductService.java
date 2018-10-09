@@ -13,6 +13,7 @@ import com.ys.inventory.mapper.ProductMapper;
 import com.ys.inventory.mapper.ProductTempMapper;
 import com.ys.inventory.mapper.ProductTempMaterialMapper;
 import com.ys.inventory.vo.ProductInsertVO;
+import com.ys.inventory.vo.ProductUpdateVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,7 @@ public class ProductService {
     }
 
     private Product createInsertProduct(ProductInsertVO vo) {
-        Product product = new Product();
-        product.setProductId(UUIDUtil.getUUID());
-        product.setProductTempId(vo.getProductTempId());
-        product.setProductName(vo.getProductName());
-        product.setProductDescription(vo.getProductDescription());
-        product.setProductNum(Integer.parseInt(vo.getProductNum()));
+        Product product = new Product(UUIDUtil.getUUID(), vo.getProductTempId(), vo.getProductName(), vo.getProductDescription(), Integer.parseInt(vo.getProductNum()));
         product.setCreateUser(SecurityUtil.getUserId());
         return product;
     }
@@ -88,6 +84,14 @@ public class ProductService {
         }
     }
 
+    public void updateProduct(ProductUpdateVO vo) {
+        productMapper.updateProduct(createUpdateProduct(vo));
+    }
+
+    private Product createUpdateProduct(ProductUpdateVO vo) {
+        return new Product(vo.getProductId(), vo.getProductName(), vo.getProductDescription());
+    }
+
 //    public void deleteByPrimaryKey(String id) {
 //        Product product = new Product();
 //        product.setProductId(id);
@@ -95,11 +99,7 @@ public class ProductService {
 //        product.setUpdateTime(System.currentTimeMillis());
 //        productMapper.updateByPrimaryKey(product);
 //    }
-//
-//    public void updateByPrimaryKey(Product product) {
-//        product.setUpdateTime(System.currentTimeMillis());
-//        productMapper.updateByPrimaryKey(product);
-//    }
+
 }
 
 
