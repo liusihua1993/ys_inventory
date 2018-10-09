@@ -44,8 +44,8 @@
             <if test="productName != null">
                 product_name=#{productName},
             </if>
-            <if test="productDescribe != null">
-                product_describe=#{productDescribe},
+            <if test="productDescription != null">
+                product_description=#{productDescription},
             </if>
             update_time = now(),
             update_user = #{updateUser}
@@ -57,7 +57,7 @@
           p.product_id,
           p.product_temp_id,
           p.product_name,
-          p.product_describe,
+          p.product_description,
           p.product_num,
           p.create_time,
           p.create_user,
@@ -68,7 +68,7 @@
           product_id = #{productId,jdbcType=VARCHAR}
   </select>
     <select id="selectAll" resultMap="BaseResultMap">
-    select product_id, product_temp_id, product_name, product_describe, product_num, 
+    select product_id, product_temp_id, product_name, product_description, product_num,
     create_time, create_user, update_time, delete_flag
     from product
   </select>
