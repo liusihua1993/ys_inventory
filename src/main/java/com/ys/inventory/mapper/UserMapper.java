@@ -11,4 +11,6 @@ import com.ys.inventory.entity.User;
 public interface UserMapper {
 
     User getUserByPhoneForOauth(String username);
+
+    User getUserByPhoneForLogin(String phone);
 }
