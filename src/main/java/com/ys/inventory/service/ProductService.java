@@ -121,15 +121,15 @@ public class ProductService {
         mapperParam.put("productId", productId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());
         productMapper.delete(mapperParam);
-    }
+        //恢复原料数据
+        List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(product.getProductTempId());
+        for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
+            Material material = materialMapper.get(productTempMaterial.getMaterialId());
+            material.setMaterialNum(material.getMaterialNum() + ((productTempMaterial.getMaterialNum()) * product.getProductNum()));
+            materialMapper.updateMaterial(material);
+        }
 
-//    public void deleteByPrimaryKey(String id) {
-//        Product product = new Product();
-//        product.setProductId(id);
-//        product.setDeleteFlag("1");
-//        product.setUpdateTime(System.currentTimeMillis());
-//        productMapper.updateByPrimaryKey(product);
-//    }
+    }
 
 }
 
