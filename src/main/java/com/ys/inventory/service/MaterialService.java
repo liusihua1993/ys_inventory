@@ -86,7 +86,7 @@ public class MaterialService {
     private void ValidatorInsert(MaterialInsertVO vo) {
         // 原料名称
         Validator.notNull(vo.getMaterialName(), "原料名称不能为空");
-        checkLength(vo.getMaterialName(), 30, "公司名称长度不得超过 100 个字符");
+        checkLength(vo.getMaterialName(), 30, "公司名称长度不得超过 30 个字符");
         // 原料数量
         Validator.notNull(vo.getMaterialNum(), "个数不能为空");
         if (!vo.getMaterialNum().matches(Constants.REGEX_POSITIVE_INTEGER) || vo.getMaterialNum().length() > Integer.valueOf(Constants.SIX)) {
@@ -95,14 +95,6 @@ public class MaterialService {
         // 原料描述
         Validator.notNull(vo.getMaterialDescription(), "原料描述不能为空");
         checkLength(vo.getMaterialDescription(), 255, "原料描述长度不得超过 255 个字符");
-    }
-
-    public Material selectByPrimaryKey(String id) {
-        return materialMapper.selectByPrimaryKey(id);
-    }
-
-    public List<Material> selectAll() {
-        return materialMapper.selectAll();
     }
 
     private void checkLength(String str, int length, String message) {

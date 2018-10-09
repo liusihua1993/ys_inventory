@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ProductMapper {
 
-    int insert(Product record);
+    int insert(Product product);
 
     Product selectByPrimaryKey(String productId);
 

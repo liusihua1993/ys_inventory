@@ -5,21 +5,37 @@
         <id column="product_id" jdbcType="VARCHAR" property="productId"/>
         <result column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
         <result column="product_name" jdbcType="VARCHAR" property="productName"/>
-        <result column="product_describe" jdbcType="VARCHAR" property="productDescribe"/>
+        <result column="product_description" jdbcType="VARCHAR" property="productDescription"/>
         <result column="product_num" jdbcType="INTEGER" property="productNum"/>
         <result column="create_time" jdbcType="BIGINT" property="createTime"/>
         <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
         <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
         <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag"/>
     </resultMap>
-    <insert id="insert" parameterType="com.ys.inventory.entity.Product">
-    insert into product (product_id, product_temp_id, product_name, 
-      product_describe, product_num, create_time, 
-      create_user, update_time, delete_flag
+    <insert id="insert" parameterType="Product">
+      insert into product (
+        product_id,
+        product_temp_id,
+        product_name,
+        product_description,
+        product_num,
+        create_time,
+        create_user,
+        update_time,
+        update_user,
+        delete_flag
       )
-    values (#{productId,jdbcType=VARCHAR}, #{productTempId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
-      #{productDescribe,jdbcType=VARCHAR}, #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
-      #{createUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, #{deleteFlag,jdbcType=VARCHAR}
+      values (
+        #{productId},
+        #{productTempId},
+        #{productName},
+        #{productDescription},
+        #{productNum},
+        now(),
+        #{createUser},
+        now(),
+        #{createUser},
+        '0'
       )
   </insert>
     <update id="updateByPrimaryKey" parameterType="com.ys.inventory.entity.Product">

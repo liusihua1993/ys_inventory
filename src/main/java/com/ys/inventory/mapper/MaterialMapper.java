@@ -20,15 +20,11 @@ public interface MaterialMapper {
      */
     int insert(Material material);
 
-    Material selectByPrimaryKey(String materialId);
-
     /**
      * 修改原料信息
      * @param material
      */
     void updateMaterial(Material material);
-
-    List<Material> selectAll();
 
     /**
      * 通过原料信息判断原料是否存在

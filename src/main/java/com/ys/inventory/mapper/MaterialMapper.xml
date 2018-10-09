@@ -38,7 +38,7 @@
             <if test="materialName != null and materialName.length > 0">
                 material_name=#{materialName},
             </if>
-            <if test="materialNum != null and materialNum.length > 0">
+            <if test="materialNum != null">
                 material_num=#{materialNum},
             </if>
             <if test="materialDescription != null and materialDescription.length > 0">
