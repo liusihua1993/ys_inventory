@@ -23,7 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liusihua.
@@ -110,6 +112,15 @@ public class ProductService {
         //查询数据
         List<Product> list = productMapper.find(product);
         return new Page<>(list);
+    }
+
+    public void delete(String productId, String updateTime) {
+        Product product = productMapper.get(productId);
+        Validator.equals(updateTime, product.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
+        Map<String, String> mapperParam = new HashMap<>(2);
+        mapperParam.put("productId", productId);
+        mapperParam.put("updateUser", SecurityUtil.getUserId());
+        productMapper.delete(mapperParam);
     }
 
 //    public void deleteByPrimaryKey(String id) {

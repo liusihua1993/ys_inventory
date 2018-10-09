@@ -53,24 +53,24 @@ public class ProductController {
         vo.setProductId(productId);
         productService.updateProduct(vo);
     }
-/*
+
     @ApiOperation(value = "根据主键删除对象")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
-    @GetMapping("/delete")
-    public Result delete(@ApiParam (value="主键id") @RequestParam String id) {
-        productService.deleteByPrimaryKey(id);
-        return ResultGenerator.genSuccessResult();
+    @DeleteMapping("/{productId}/{updateTime}")
+    public void delete(@ApiParam(value = "产品ID", required = true) @PathVariable String productId,
+                       @ApiParam(value = "更新时间", required = true) @PathVariable String updateTime) {
+        productService.delete(productId,updateTime);
     }
+    /*
+        @ApiOperation(value = "根据主键查询对象")
+        @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
+        @GetMapping("/detail")
+        public Result detail(@ApiParam (value="主键id") @RequestParam String id) {
+            Product product = ProductMapper.selectByPrimaryKey(id);
+            return ResultGenerator.genSuccessResult(product);
+        }
 
-    @ApiOperation(value = "根据主键查询对象")
-    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
-    @GetMapping("/detail")
-    public Result detail(@ApiParam (value="主键id") @RequestParam String id) {
-        Product product = ProductMapper.selectByPrimaryKey(id);
-        return ResultGenerator.genSuccessResult(product);
-    }
-
-*/
+    */
     @ApiOperation(value = "查询全部")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
     @GetMapping

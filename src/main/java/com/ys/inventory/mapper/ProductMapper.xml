@@ -52,7 +52,7 @@
         </set>
         where product_id = #{productId}
     </update>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
           SELECT
           p.product_id,
           p.product_temp_id,
@@ -67,6 +67,17 @@
       WHERE
           product_id = #{productId,jdbcType=VARCHAR}
   </select>
+
+    <update id="delete" parameterType="map">
+        update product
+        set delete_flag = '1',
+        update_time = now(),
+        update_user = #{updateUser}
+        where
+        delete_flag = '0'
+        and product_id = #{productId}
+    </update>
+
     <select id="find" resultType="Product">
     select
       product_id,
