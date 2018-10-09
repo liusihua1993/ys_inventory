@@ -1,7 +1,10 @@
 package com.ys.inventory.service;
 
+
+import com.github.pagehelper.PageHelper;
 import com.ys.inventory.common.exception.BusinessException;
 import com.ys.inventory.common.utils.Constants;
+import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.UUIDUtil;
 import com.ys.inventory.common.validator.Validator;
@@ -13,6 +16,7 @@ import com.ys.inventory.mapper.ProductMapper;
 import com.ys.inventory.mapper.ProductTempMapper;
 import com.ys.inventory.mapper.ProductTempMaterialMapper;
 import com.ys.inventory.vo.ProductInsertVO;
+import com.ys.inventory.vo.ProductSearchVO;
 import com.ys.inventory.vo.ProductUpdateVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +62,13 @@ public class ProductService {
     }
 
     private Product createInsertProduct(ProductInsertVO vo) {
-        Product product = new Product(UUIDUtil.getUUID(), vo.getProductTempId(), vo.getProductName(), vo.getProductDescription(), Integer.parseInt(vo.getProductNum()));
+        Product product = new Product();
         product.setCreateUser(SecurityUtil.getUserId());
+        product.setProductId(UUIDUtil.getUUID());
+        product.setProductTempId(vo.getProductTempId());
+        product.setProductName(vo.getProductName());
+        product.setProductDescription(vo.getProductDescription());
+        product.setProductNum(Integer.parseInt(vo.getProductNum()));
         return product;
     }
 
@@ -89,7 +98,18 @@ public class ProductService {
     }
 
     private Product createUpdateProduct(ProductUpdateVO vo) {
-        return new Product(vo.getProductId(), vo.getProductName(), vo.getProductDescription());
+        Product product = new Product();
+        product.setProductId(vo.getProductId());
+        product.setProductName(vo.getProductName());
+        product.setProductDescription(vo.getProductDescription());
+        return product;
+    }
+
+    public Page<Product> find(ProductSearchVO product) {
+        PageHelper.startPage(product);
+        //查询数据
+        List<Product> list = productMapper.find(product);
+        return new Page<>(list);
     }
 
 //    public void deleteByPrimaryKey(String id) {

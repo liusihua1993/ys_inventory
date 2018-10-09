@@ -1,6 +1,8 @@
 package com.ys.inventory.mapper;
 
 import com.ys.inventory.entity.Product;
+import com.ys.inventory.vo.ProductSearchVO;
+
 import java.util.List;
 
 public interface ProductMapper {
@@ -14,4 +16,6 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     void updateProduct(Product updateProduct);
+
+    List<Product> find(ProductSearchVO product);
 }

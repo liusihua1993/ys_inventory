@@ -1,9 +1,13 @@
 package com.ys.inventory.controller;
 
+
 import com.ys.inventory.common.core.Result;
+import com.ys.inventory.common.utils.Page;
+import com.ys.inventory.entity.Product;
 import com.ys.inventory.mapper.ProductMapper;
 import com.ys.inventory.service.ProductService;
 import com.ys.inventory.vo.ProductInsertVO;
+import com.ys.inventory.vo.ProductSearchVO;
 import com.ys.inventory.vo.ProductUpdateVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -66,20 +70,13 @@ public class ProductController {
         return ResultGenerator.genSuccessResult(product);
     }
 
-
+*/
     @ApiOperation(value = "查询全部")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
-    @GetMapping("/queryAll")
-    public Result queryAll(@ApiParam (value="请求第几页") @RequestParam(defaultValue = "0") Integer page,
-                           @ApiParam (value="每页个数") @RequestParam(defaultValue = "0") Integer size) {
-        PageHelper.startPage(page, size);
-        List<Product> list;
-
-        list = ProductMapper.selectAll();
-
-        PageInfo pageInfo = new PageInfo(list);
-        return ResultGenerator.genSuccessResult(pageInfo);
+    @GetMapping
+    public Page<Product> find(@ApiParam("查询条件") ProductSearchVO product) {
+        return productService.find(product);
     }
-*/
+
 
 }
