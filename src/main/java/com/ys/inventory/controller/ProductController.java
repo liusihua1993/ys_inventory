@@ -18,17 +18,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 
-
 /**
-* @author liusihua.
-* @date 2018/09/11.
-*/
-@Api(value="Product ",tags={"Product"})
+ * @author liusihua.
+ * @date 2018/09/11.
+ */
+@Api(value = "Product ", tags = {"Product"})
 @RestController
 @RequestMapping("/product")
 public class ProductController {
 
-     Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private ProductService productService;
@@ -38,15 +37,15 @@ public class ProductController {
 
 
     @ApiOperation(value = "添加Product实体")
-    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @PostMapping
-    public void add(@ApiParam (value="Product json对象") @RequestBody ProductInsertVO vo) {
+    public void add(@ApiParam(value = "Product json对象") @RequestBody ProductInsertVO vo) {
         productService.insert(vo);
     }
 
 
     @ApiOperation(value = "更新Product")
-    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @PutMapping(value = "/{productId}/updateProduct")
     public void update(@ApiParam(value = "产品id", required = true) @PathVariable String productId,
                        @ApiParam(value = "待更新的产品", required = true) @RequestBody ProductUpdateVO vo) {
@@ -55,24 +54,24 @@ public class ProductController {
     }
 
     @ApiOperation(value = "根据主键删除对象")
-    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @DeleteMapping("/{productId}/{updateTime}")
     public void delete(@ApiParam(value = "产品ID", required = true) @PathVariable String productId,
                        @ApiParam(value = "更新时间", required = true) @PathVariable String updateTime) {
-        productService.delete(productId,updateTime);
+        productService.delete(productId, updateTime);
     }
-    /*
-        @ApiOperation(value = "根据主键查询对象")
-        @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
-        @GetMapping("/detail")
-        public Result detail(@ApiParam (value="主键id") @RequestParam String id) {
-            Product product = ProductMapper.selectByPrimaryKey(id);
-            return ResultGenerator.genSuccessResult(product);
-        }
 
-    */
+
+    @ApiOperation(value = "根据主键查询对象")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Product.class)})
+    @GetMapping("/{productId}")
+    public Product detail(@ApiParam(value = "主键id") @PathVariable String productId) {
+        return productService.get(productId);
+    }
+
+
     @ApiOperation(value = "查询全部")
-    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Product.class)})
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Product.class)})
     @GetMapping
     public Page<Product> find(@ApiParam("查询条件") ProductSearchVO product) {
         return productService.find(product);

@@ -52,7 +52,7 @@
         </set>
         where product_id = #{productId}
     </update>
-    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="get" parameterType="String" resultType="Product">
           SELECT
           p.product_id,
           p.product_temp_id,

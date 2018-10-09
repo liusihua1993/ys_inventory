@@ -131,6 +131,9 @@ public class ProductService {
 
     }
 
+    public Product get(String productId) {
+        return productMapper.get(productId);
+    }
 }
 
 

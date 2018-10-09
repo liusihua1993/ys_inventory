@@ -39,4 +39,9 @@ public class Product extends BaseEntity {
      */
     private Integer productNum;
 
+    /**
+     * vo
+     */
+    private String productTempName;
+
 }
