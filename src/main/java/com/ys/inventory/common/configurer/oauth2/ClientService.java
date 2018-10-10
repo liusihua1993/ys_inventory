@@ -17,7 +17,7 @@ public class ClientService implements ClientDetailsService {
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         BaseClientDetails baseClientDetails = new BaseClientDetails();
-            baseClientDetails.setClientId("test_client");
+            baseClientDetails.setClientId("ys_client");
         baseClientDetails.setAuthorizedGrantTypes(Sets.newHashSet(
                 "password",
                 "refresh_token"
