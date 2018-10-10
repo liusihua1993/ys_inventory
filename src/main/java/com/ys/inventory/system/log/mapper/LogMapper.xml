@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.inventory.system.log.mapper.LogMapper">
+
+    <select id="find" resultType="Log">
+      select id, module_name, content, ip, user_id, operator, operation_time, consume_time, create_time, create_user, update_time, update_user, delete_flag
+       from sys_log
+      where delete_flag = '0'
+      <if test="moduleName != null and moduleName != ''">
+        and module_name = #{moduleName}
+      </if>
+      <if test="operator != null and operator != ''">
+        and operator like concat('%', #{operator},'%')
+      </if>
+      <if test="operationTimeStart != null and operationTimeStart != ''">
+        and operation_time >= #{operationTimeStart}
+      </if>
+      <if test="operationTimeEnd != null and operationTimeEnd != ''">
+        and operation_time <![CDATA[<]]> DATE_ADD(#{operationTimeEnd},INTERVAL 1 DAY)
+      </if>
+      order by operation_time desc
+    </select>
+
+    <insert id="insert">
+      insert into sys_log(
+        id,
+        module_name,
+        content,
+        ip,
+        user_id,
+        operator,
+        operation_time,
+        consume_time,
+        create_time,
+        create_user,
+        update_time,
+        update_user,
+        delete_flag
+      )
+      values
+        (
+        #{id},
+        #{moduleName},
+        #{content},
+        #{ip},
+        #{userId},
+        #{operator},
+        now(),
+        #{consumeTime},
+        now(),
+        #{createUser},
+        now(),
+        #{createUser},
+        '0'
+      )
+    </insert>
+
+    <delete id="delete">
+      <![CDATA[
+        delete from sys_log where operation_time < date_format(ADDDATE(NOW(), INTERVAL #{month} MONTH),'%Y-%m-%d')
+      ]]>
+    </delete>
+
+</mapper>
