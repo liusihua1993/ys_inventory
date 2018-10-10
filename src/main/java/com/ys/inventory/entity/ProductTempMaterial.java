@@ -35,6 +35,11 @@ public class ProductTempMaterial extends BaseEntity {
     private Integer materialNum;
 
     /**
+     * 排序
+     */
+    private String ptOrder;
+
+    /**
      * vo
      */
     private String materialName;

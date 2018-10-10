@@ -15,6 +15,7 @@
             <result column="material_id" jdbcType="VARCHAR" property="materialId"/>
             <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
             <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
+            <result column="pt_order" jdbcType="VARCHAR" property="ptOrder"/>
         </collection>
     </resultMap>
 
@@ -66,6 +67,7 @@
         ptm.material_num,
         ptm.product_temp_id AS ptm_product_temp_id,
         ptm.product_temp_material_id,
+        ptm.pt_order,
         m.material_name
     FROM
         product_temp pt
@@ -73,6 +75,7 @@
         LEFT JOIN material m ON ptm.material_id = m.material_id
     WHERE
         pt.product_temp_id = #{productTempId,jdbcType=VARCHAR}
+    ORDER BY ptm.pt_order ASC
   </select>
 
     <select id="getProductTempByName" parameterType="String" resultType="ProductTemp">
