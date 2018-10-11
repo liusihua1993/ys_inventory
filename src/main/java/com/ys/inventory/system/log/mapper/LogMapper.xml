@@ -5,7 +5,7 @@
     <select id="find" resultType="Log">
       select id, module_name, content, ip, user_id, operator, operation_time, consume_time, create_time, create_user, update_time, update_user, delete_flag
        from log
-      where delete_flag = '0'
+      where delete_flag = '0' and content IS NOT null
       <if test="moduleName != null and moduleName != ''">
         and module_name = #{moduleName}
       </if>
