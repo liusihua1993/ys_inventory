@@ -5,6 +5,8 @@ import com.ys.inventory.common.core.Result;
 import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.service.MaterialService;
+import com.ys.inventory.system.log.annotation.LogAction;
+import com.ys.inventory.system.log.annotation.LogModule;
 import com.ys.inventory.vo.MaterialInsertVO;
 import com.ys.inventory.vo.MaterialSearchVO;
 import com.ys.inventory.vo.MaterialUpdateVO;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value="Material ",tags={"Material"})
 @RestController
 @RequestMapping("/material")
+@LogModule(moduleName = "Material")
 public class MaterialController {
     
      Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,6 +35,7 @@ public class MaterialController {
 
     @ApiOperation(value = "添加原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @LogAction(value = "添加原料")
     @PostMapping
     public void add(@ApiParam(value = "待插入的原料信息", required = true) @RequestBody MaterialInsertVO vo) {
         materialService.insert(vo);
@@ -39,6 +43,7 @@ public class MaterialController {
 
     @ApiOperation(value = "更新原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @LogAction(value = "更新原料")
     @PutMapping(value = "/{materialId}/updateMaterial")
     public void update(@ApiParam(value = "原料id", required = true) @PathVariable String materialId,
                          @ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVO vo) {
@@ -48,6 +53,7 @@ public class MaterialController {
 
     @ApiOperation(value = "根据主键查询原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Material.class)})
+    @LogAction(value = "查看原料详情")
     @GetMapping(value = "/{materialId}")
     public Material get(@ApiParam (value="主键id") @PathVariable String materialId) {
         return materialService.get(materialId);
@@ -55,6 +61,7 @@ public class MaterialController {
 
     @ApiOperation(value = "删除原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @LogAction(value = "删除原料")
     @DeleteMapping("/{materialId}/{updateTime}")
     public void delete(@ApiParam(value = "原料ID", required = true) @PathVariable String materialId,
                        @ApiParam(value = "更新时间", required = true) @PathVariable String updateTime) {
@@ -64,6 +71,7 @@ public class MaterialController {
 
     @ApiOperation(value = "查询全部原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Material.class)})
+    @LogAction(value = "查看原料列表")
     @GetMapping
     public Page<Material> find(@ApiParam("查询条件") MaterialSearchVO material) {
         return materialService.find(material);

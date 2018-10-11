@@ -4,7 +4,7 @@
 
     <select id="find" resultType="Log">
       select id, module_name, content, ip, user_id, operator, operation_time, consume_time, create_time, create_user, update_time, update_user, delete_flag
-       from sys_log
+       from log
       where delete_flag = '0'
       <if test="moduleName != null and moduleName != ''">
         and module_name = #{moduleName}
@@ -22,7 +22,7 @@
     </select>
 
     <insert id="insert">
-      insert into sys_log(
+      insert into log(
         id,
         module_name,
         content,
@@ -57,7 +57,7 @@
 
     <delete id="delete">
       <![CDATA[
-        delete from sys_log where operation_time < date_format(ADDDATE(NOW(), INTERVAL #{month} MONTH),'%Y-%m-%d')
+        delete from log where operation_time < date_format(ADDDATE(NOW(), INTERVAL #{month} MONTH),'%Y-%m-%d')
       ]]>
     </delete>
 

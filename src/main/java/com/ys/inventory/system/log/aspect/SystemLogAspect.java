@@ -38,9 +38,7 @@ public class SystemLogAspect {
 
     private long afterTime;
 
-    @Pointcut("execution(* com.ys.inventory.controller.*(..)) && " +
-            "@within(com.ys.inventory.system.log.annotation.LogModule) && " +
-            "@annotation(com.ys.inventory.system.log.annotation.LogAction)")
+    @Pointcut("execution(* com.ys.inventory..*Controller.*(..))")
     public void controllerMethodPointcut(){}
 
     /**
@@ -67,6 +65,7 @@ public class SystemLogAspect {
 
             LogInsertVO vo = new LogInsertVO();
             vo.setId(UUIDUtil.getUUID());
+
             LogModule fd = null;
             LogAction md = null;
             if(targetClass.isAnnotationPresent(LogModule.class)){

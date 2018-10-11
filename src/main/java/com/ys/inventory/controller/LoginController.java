@@ -4,12 +4,15 @@ package com.ys.inventory.controller;
 import com.ys.inventory.common.core.Result;
 import com.ys.inventory.entity.User;
 import com.ys.inventory.service.LoginService;
+import com.ys.inventory.system.log.annotation.LogAction;
+import com.ys.inventory.system.log.annotation.LogModule;
 import com.ys.inventory.vo.LoginVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(value = "Login ", tags = {"Login"})
 @RestController
+@LogModule(moduleName = "Login")
 public class LoginController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,8 +30,9 @@ public class LoginController {
     private LoginService loginService;
 
 
-    @ApiOperation(value = "登录")
+    @ApiOperation(value = "进行登录")
     @ApiResponses({@ApiResponse(code = 200, message = "登录成功", response = Result.class)})
+    @LogAction(value = "登录")
     @PostMapping(value = "/login")
     public User add(@ApiParam(value = "登录信息", required = true) LoginVO vo) {
         return loginService.login(vo);
