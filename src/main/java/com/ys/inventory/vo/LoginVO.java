@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class LoginVO {
     @ApiModelProperty(value = "手机号")
-    private String phone;
+    private String userName;
 
     @ApiModelProperty(value = "密码")
     private String password;

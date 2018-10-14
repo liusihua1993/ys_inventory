@@ -12,5 +12,4 @@ public interface UserMapper {
 
     User getUserByPhoneForOauth(String username);
 
-    User getUserByPhoneForLogin(String phone);
 }

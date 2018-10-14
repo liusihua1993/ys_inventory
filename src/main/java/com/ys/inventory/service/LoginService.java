@@ -22,7 +22,7 @@ public class LoginService {
     private UserMapper userMapper;
 
     public User login(LoginVO vo) {
-        User user = userMapper.getUserByPhoneForOauth(vo.getPhone());
+        User user = userMapper.getUserByPhoneForOauth(vo.getUserName());
         if (user != null) {
             if (vo.getPassword().equals(user.getPassword())) {
                 user.setPassword(null);
