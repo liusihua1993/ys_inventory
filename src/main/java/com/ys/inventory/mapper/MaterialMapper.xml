@@ -63,7 +63,7 @@
     from material m LEFT JOIN user u ON m.create_user = u.user_id
     where
       material_id = #{materialId}
-      AND delete_flag = '0'
+      AND m.delete_flag = '0'
     </select>
 
     <update id="delete" parameterType="map">
