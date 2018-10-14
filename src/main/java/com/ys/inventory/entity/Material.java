@@ -34,4 +34,5 @@ public class Material extends BaseEntity{
      */
     private String materialDescription;
 
+    private String userName;
 }

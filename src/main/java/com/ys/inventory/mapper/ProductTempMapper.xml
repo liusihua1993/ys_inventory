@@ -9,6 +9,7 @@
         <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
         <result column="update_time" property="updateTime"/>
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <collection property="productTempMaterialList" ofType="com.ys.inventory.entity.ProductTempMaterial">
             <id column="product_temp_material_id" jdbcType="VARCHAR" property="productTempMaterialId"/>
             <result column="ptm_product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
@@ -68,11 +69,13 @@
         ptm.product_temp_id AS ptm_product_temp_id,
         ptm.product_temp_material_id,
         ptm.pt_order,
-        m.material_name
+        m.material_name,
+        u.user_name
     FROM
         product_temp pt
         LEFT JOIN product_temp_material ptm ON pt.product_temp_id = ptm.product_temp_id
         LEFT JOIN material m ON ptm.material_id = m.material_id
+        LEFT JOIN user u ON pt.create_user = u.user_id
     WHERE
         pt.product_temp_id = #{productTempId,jdbcType=VARCHAR}
     ORDER BY ptm.pt_order ASC

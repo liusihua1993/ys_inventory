@@ -35,4 +35,5 @@ public class ProductTemp extends BaseEntity{
      */
     private List<ProductTempMaterial> productTempMaterialList;
 
+    private String userName;
 }

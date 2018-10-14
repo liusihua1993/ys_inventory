@@ -51,18 +51,19 @@
     </update>
     <select id="get" parameterType="String" resultType="Material">
     select
-      material_id,
-      material_name,
-      material_num,
-      material_description,
-      create_time,
-      create_user,
-      update_time,
-      update_user
-    from material
+      m.material_id,
+      m.material_name,
+      m.material_num,
+      m.material_description,
+      m.create_time,
+      m.create_user,
+      m.update_time,
+      m.update_user,
+      u.user_name
+    from material m LEFT JOIN user u ON m.create_user = u.user_id
     where
       material_id = #{materialId}
-      and delete_flag = '0'
+      AND delete_flag = '0'
     </select>
 
     <update id="delete" parameterType="map">
