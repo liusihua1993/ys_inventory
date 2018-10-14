@@ -45,7 +45,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html")
+                .antMatchers("/swagger-ui.html","/material/*")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

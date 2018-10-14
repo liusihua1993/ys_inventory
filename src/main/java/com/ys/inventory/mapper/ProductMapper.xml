@@ -61,9 +61,11 @@
           p.product_num,
           p.create_time,
           p.create_user,
+          u.user_name,
           pt.product_temp_name
       FROM
           product p LEFT JOIN product_temp pt ON p.product_temp_id = pt.product_temp_id
+                    LEFT JOIN user u ON p.create_user = u.user_id
       WHERE
           product_id = #{productId,jdbcType=VARCHAR}
   </select>

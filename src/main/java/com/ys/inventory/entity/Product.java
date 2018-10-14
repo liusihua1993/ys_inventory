@@ -44,4 +44,6 @@ public class Product extends BaseEntity {
      */
     private String productTempName;
 
+    private String userName;
+
 }
