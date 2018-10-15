@@ -9,6 +9,6 @@
           phone,
           password
         FROM user
-        WHERE phone =#{userName}
+        WHERE phone =#{username}
     </select>
 </mapper>
