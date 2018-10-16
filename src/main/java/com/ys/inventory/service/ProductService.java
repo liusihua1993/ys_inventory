@@ -116,7 +116,7 @@ public class ProductService {
 
     public void delete(String productId, String updateTime) {
         Product product = productMapper.get(productId);
-        Validator.equals(updateTime, product.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
+        //Validator.equals(updateTime, product.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
         Map<String, String> mapperParam = new HashMap<>(2);
         mapperParam.put("productId", productId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());

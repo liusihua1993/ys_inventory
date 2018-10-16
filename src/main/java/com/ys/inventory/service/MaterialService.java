@@ -109,7 +109,7 @@ public class MaterialService {
 
     public void delete(String materialId, String updateTime) {
         Material material = materialMapper.get(materialId);
-        Validator.equals(updateTime, material.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
+        //Validator.equals(updateTime, material.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
         Map<String, String> mapperParam = new HashMap<>(2);
         mapperParam.put("materialId", materialId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());

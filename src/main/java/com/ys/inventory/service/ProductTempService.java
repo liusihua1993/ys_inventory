@@ -131,7 +131,7 @@ public class ProductTempService {
 
     public void delete(String productTempId, String updateTime) {
         ProductTemp productTemp = productTempMapper.get(productTempId);
-        Validator.equals(updateTime, productTemp.getUpdateTime(), "模板信息已过时，可能已被其他人更新");
+        //Validator.equals(updateTime, productTemp.getUpdateTime(), "模板信息已过时，可能已被其他人更新");
         HashMap<String, String> mapperParam = new HashMap<>(2);
         mapperParam.put("productTempId", productTempId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());
