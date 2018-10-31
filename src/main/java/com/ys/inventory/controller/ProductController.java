@@ -27,7 +27,7 @@ import javax.annotation.Resource;
 @Api(value = "Product ", tags = {"Product"})
 @RestController
 @RequestMapping("/product")
-@LogModule(moduleName = "Product")
+@LogModule(moduleName = "产品")
 public class ProductController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());

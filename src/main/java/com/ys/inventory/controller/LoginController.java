@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(value = "Login ", tags = {"Login"})
 @RestController
-@LogModule(moduleName = "Login")
+@LogModule(moduleName = "登录")
 public class LoginController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -33,7 +33,7 @@ public class LoginController {
 
     @ApiOperation(value = "进行登录")
     @ApiResponses({@ApiResponse(code = 200, message = "登录成功", response = Result.class)})
-    @LogAction(value = "登录")
+    @LogAction(value = "进行登录")
     @PostMapping(value = "/login")
     public User add(@ApiParam(value = "登录信息", required = true) @RequestBody LoginVO vo) {
         return loginService.login(vo);

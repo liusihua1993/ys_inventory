@@ -36,6 +36,7 @@ public class LogController {
     }
 
     @ApiOperation(value = "下载")
+    @LogAction(value = "查询下载")
     @GetMapping(value = "/download")
     public ResponseEntity<byte[]> download(@ApiParam("查询条件") LogSearchVO vo) throws Exception{
         return DownloadUtil.download(service.downloadFile(vo),service.generateFileName());

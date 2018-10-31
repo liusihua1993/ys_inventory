@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value="Material ",tags={"Material"})
 @RestController
 @RequestMapping("/material")
-@LogModule(moduleName = "Material")
+@LogModule(moduleName = "原料")
 public class MaterialController {
     
      Logger logger = LoggerFactory.getLogger(this.getClass());
