@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class ProductTempInsertVO {
+public class ProductTempInsertVO extends BaseVO{
 
     @ApiModelProperty(value = "主键")
     private String productTempId;

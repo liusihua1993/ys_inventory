@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ProductInsertVO {
+public class ProductInsertVO extends BaseVO{
     @ApiModelProperty(value = "主键")
     private String productId;
 

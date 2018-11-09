@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MaterialInsertVO {
+public class MaterialInsertVO extends BaseVO{
     @ApiModelProperty(value = "主键")
     private String materialId;
 
