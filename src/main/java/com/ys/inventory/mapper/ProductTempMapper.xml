@@ -61,7 +61,7 @@
         pt.product_temp_name,
         pt.product_temp_describe,
         pt.create_time,
-        pt.create_user,
+        (select u.user_name from user u where u.user_id = pt.create_user) create_user,
         pt.update_time,
         pt.update_user,
         ptm.material_id,
@@ -100,7 +100,9 @@
     </select>
 
     <select id="find" resultType="ProductTemp">
-        select product_temp_id, product_temp_name, product_temp_describe, create_time, create_user,
+        select product_temp_id, product_temp_name, product_temp_describe,
+        create_time,
+        (select u.user_name from user u where u.user_id = create_user) create_user,
         update_time
         from product_temp
         WHERE delete_flag = '0'

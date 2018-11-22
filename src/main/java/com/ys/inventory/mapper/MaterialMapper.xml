@@ -7,7 +7,7 @@
         <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
         <result column="create_time" jdbcType="BIGINT" property="createTime"/>
         <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
-        <result column="create_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
     </resultMap>
     <insert id="insert" parameterType="Material">
         insert into material (
@@ -56,7 +56,7 @@
       m.material_num,
       m.material_description,
       m.create_time,
-      m.create_user,
+      (select u.user_name from user u where u.user_id = m.create_user) create_user,
       m.update_time,
       m.update_user,
       u.user_name
@@ -77,7 +77,9 @@
     </update>
 
     <select id="find" resultType="Material">
-        select material_id, material_name, material_num, create_time, create_user,update_time,update_user
+        select material_id, material_name, material_num, create_time,
+        (select u.user_name from user u where u.user_id = create_user) create_user,
+        update_time,update_user
         from material
         where delete_flag = '0'
         <if test="materialName !=null">
@@ -93,7 +95,7 @@
         material_num,
         material_description,
         create_time,
-        create_user,
+        (select u.user_name from user u where u.user_id = create_user) create_user,
         update_time
         from material
         where
