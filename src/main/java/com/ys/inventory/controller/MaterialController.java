@@ -51,6 +51,15 @@ public class MaterialController {
         materialService.updateMaterial(vo);
     }
 
+    @ApiOperation(value = "添加原料数量")
+    @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
+    @LogAction(value = "更新原料")
+    @PostMapping(value = "/updateMaterialNumber")
+    public void updateMaterialNumber(@ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVO vo) {
+        materialService.updateMaterialNumber(vo);
+    }
+
+
     @ApiOperation(value = "根据主键查询原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Material.class)})
     @LogAction(value = "查看原料详情")

@@ -107,4 +107,11 @@
         </if>
 
     </select>
+
+    <select id="getMaterialNumberByMaterialId" parameterType="string" resultType="int">
+        select
+        material_num
+        from material
+        where material_id =#{materialId}
+    </select>
 </mapper>

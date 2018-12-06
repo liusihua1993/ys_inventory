@@ -127,6 +127,19 @@ public class MaterialService {
         List<Material> list = materialMapper.find(material);
         return new Page<>(list);
     }
+
+    public void updateMaterialNumber(MaterialUpdateVO vo) {
+        String materialId = vo.getMaterialId();
+        //原有数量
+        int oldNumber = materialMapper.getMaterialNumberByMaterialId(materialId);
+        //相加和
+        int newNumber = oldNumber + Integer.valueOf(vo.getMaterialNum());
+        Material material = new Material();
+        material.setMaterialId(materialId);
+        material.setMaterialNum(newNumber);
+        materialMapper.updateMaterial(material);
+
+    }
 }
 
 

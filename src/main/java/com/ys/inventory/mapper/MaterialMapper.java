@@ -52,4 +52,6 @@ public interface MaterialMapper {
      * @return
      */
     List<Material> find(MaterialSearchVO material);
+
+    int getMaterialNumberByMaterialId(String materialId);
 }
