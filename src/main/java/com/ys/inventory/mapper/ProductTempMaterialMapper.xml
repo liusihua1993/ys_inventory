@@ -5,7 +5,7 @@
         <id column="product_temp_material_id" jdbcType="VARCHAR" property="productTempMaterialId"/>
         <result column="product_temp_id" jdbcType="VARCHAR" property="productTempId"/>
         <result column="material_id" jdbcType="VARCHAR" property="materialId"/>
-        <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
+        <result column="material_num" jdbcType="DECIMAL" property="materialNum"/>
     </resultMap>
 
     <delete id="deleteForUpdate" parameterType="String">

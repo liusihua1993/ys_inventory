@@ -3,6 +3,7 @@ package com.ys.inventory.mapper;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.vo.MaterialSearchVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,5 @@ public interface MaterialMapper {
      */
     List<Material> find(MaterialSearchVO material);
 
-    int getMaterialNumberByMaterialId(String materialId);
+    BigDecimal getMaterialNumberByMaterialId(String materialId);
 }

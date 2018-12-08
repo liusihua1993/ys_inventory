@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 
+import java.math.BigDecimal;
+
 /**
  * 实体类对应的数据表为：  material
  *
@@ -27,7 +29,7 @@ public class Material extends BaseEntity{
     /**
      * 原料数量
      */
-    private Integer materialNum;
+    private BigDecimal materialNum;
 
     /**
      * 原料描述

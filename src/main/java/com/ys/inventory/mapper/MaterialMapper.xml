@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.ys.inventory.entity.Material">
         <id column="material_id" jdbcType="VARCHAR" property="materialId"/>
         <result column="material_name" jdbcType="VARCHAR" property="materialName"/>
-        <result column="material_num" jdbcType="INTEGER" property="materialNum"/>
+        <result column="material_num" jdbcType="DECIMAL" property="materialNum"/>
         <result column="create_time" jdbcType="BIGINT" property="createTime"/>
         <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
         <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
@@ -108,7 +108,7 @@
 
     </select>
 
-    <select id="getMaterialNumberByMaterialId" parameterType="string" resultType="int">
+    <select id="getMaterialNumberByMaterialId" parameterType="string" resultType="decimal">
         select
         material_num
         from material

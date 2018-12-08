@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,10 @@ public class ProductService {
         List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(vo.getProductTempId());
         for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
             Material material = materialMapper.get(productTempMaterial.getMaterialId());
-            material.setMaterialNum(material.getMaterialNum() - ((productTempMaterial.getMaterialNum()) * Integer.parseInt(vo.getProductNum())));
+            //param=模板中的原料数量*产品数量
+            BigDecimal param = productTempMaterial.getMaterialNum().multiply(new BigDecimal(vo.getProductNum()));
+            //原料剩余-param
+            material.setMaterialNum(material.getMaterialNum().subtract(param));
             materialMapper.updateMaterial(material);
         }
     }
@@ -125,7 +129,10 @@ public class ProductService {
         List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(product.getProductTempId());
         for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
             Material material = materialMapper.get(productTempMaterial.getMaterialId());
-            material.setMaterialNum(material.getMaterialNum() + ((productTempMaterial.getMaterialNum()) * product.getProductNum()));
+            //param=模板中的原料数量*产品数量
+            BigDecimal param = productTempMaterial.getMaterialNum().multiply(new BigDecimal(product.getProductNum()));
+            //原料剩余+param
+            material.setMaterialNum(material.getMaterialNum().add(param));
             materialMapper.updateMaterial(material);
         }
 

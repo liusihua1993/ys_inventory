@@ -2,7 +2,6 @@ package com.ys.inventory.service;
 
 import com.github.pagehelper.PageHelper;
 import com.ys.inventory.common.exception.BusinessException;
-import com.ys.inventory.common.utils.Constants;
 import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.UUIDUtil;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class MaterialService {
 
     private Material createInsertMaterial(MaterialInsertVO vo) {
         Material material = new Material();
-        material.setMaterialNum(Integer.valueOf(vo.getMaterialNum()));
+        material.setMaterialNum(new BigDecimal(vo.getMaterialNum()));
         material.setMaterialName(vo.getMaterialName());
         material.setMaterialId(UUIDUtil.getUUID());
         material.setMaterialDescription(vo.getMaterialDescription());
@@ -87,11 +87,6 @@ public class MaterialService {
         // 原料名称
         Validator.notNull(vo.getMaterialName(), "原料名称不能为空");
         checkLength(vo.getMaterialName(), 30, "公司名称长度不得超过 30 个字符");
-        // 原料数量
-        Validator.notNull(vo.getMaterialNum(), "个数不能为空");
-        if (!vo.getMaterialNum().matches(Constants.REGEX_POSITIVE_INTEGER) || vo.getMaterialNum().length() > Integer.valueOf(Constants.SIX)) {
-            throw new BusinessException("个数只能输入正整数,并且长度不得超过6位数");
-        }
         // 原料描述
         Validator.notNull(vo.getMaterialDescription(), "原料描述不能为空");
         checkLength(vo.getMaterialDescription(), 255, "原料描述长度不得超过 255 个字符");
@@ -131,9 +126,10 @@ public class MaterialService {
     public void updateMaterialNumber(MaterialUpdateVO vo) {
         String materialId = vo.getMaterialId();
         //原有数量
-        int oldNumber = materialMapper.getMaterialNumberByMaterialId(materialId);
+        BigDecimal oldNumber = materialMapper.getMaterialNumberByMaterialId(materialId);
         //相加和
-        int newNumber = oldNumber + Integer.valueOf(vo.getMaterialNum());
+        BigDecimal param = new BigDecimal(vo.getMaterialNum());
+        BigDecimal newNumber = oldNumber.add(param);
         Material material = new Material();
         material.setMaterialId(materialId);
         material.setMaterialNum(newNumber);
