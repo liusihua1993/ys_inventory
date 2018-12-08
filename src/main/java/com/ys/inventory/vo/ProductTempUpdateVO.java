@@ -15,5 +15,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductTempUpdateVO extends ProductTempInsertVO{
-
+    private String userName;
 }

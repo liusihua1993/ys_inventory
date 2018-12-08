@@ -3,8 +3,21 @@
 <mapper namespace="com.ys.inventory.system.log.mapper.LogMapper">
 
     <select id="find" resultType="Log">
-      select id, module_name, content, ip, user_id, operator, operation_time, consume_time, create_time, create_user, update_time, update_user, delete_flag
-       from log
+      select
+      l.id,
+      l.module_name,
+      l.content,
+      l.ip,
+      l.user_id,
+      l.operator,
+      l.operation_time,
+      l.consume_time,
+      l.create_time,
+      (select u.user_name from user u where u.user_id = l.create_user) create_user,
+      l.update_time,
+      l.update_user,
+      l.delete_flag
+       from log l
       where delete_flag = '0' and content IS NOT null
       <if test="moduleName != null and moduleName != ''">
         and module_name = #{moduleName}

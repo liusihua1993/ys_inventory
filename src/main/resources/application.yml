@@ -49,7 +49,7 @@ mybatis:
 logging:
   level:
     com:
-      mlink: debug
+      mlink: warn
 
 #swagger
 pringfox:

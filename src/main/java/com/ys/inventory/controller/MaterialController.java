@@ -53,7 +53,7 @@ public class MaterialController {
 
     @ApiOperation(value = "添加原料数量")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Result.class)})
-    @LogAction(value = "更新原料")
+    @LogAction(value = "添加原料数量")
     @PostMapping(value = "/updateMaterialNumber")
     public void updateMaterialNumber(@ApiParam(value = "待更新的公司", required = true) @RequestBody MaterialUpdateVO vo) {
         materialService.updateMaterialNumber(vo);
