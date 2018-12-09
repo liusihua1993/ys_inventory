@@ -22,7 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -54,17 +57,6 @@ public class ProductService {
         ValidatorInsert(vo);
         //产品信息入库
         productMapper.insert(createInsertProduct(vo));
-        //修改对应的原料的数量
-        //获取对应的模板信息
-        List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(vo.getProductTempId());
-        for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
-            Material material = materialMapper.get(productTempMaterial.getMaterialId());
-            //param=模板中的原料数量*产品数量
-            BigDecimal param = productTempMaterial.getMaterialNum().multiply(new BigDecimal(vo.getProductNum()));
-            //原料剩余-param
-            material.setMaterialNum(material.getMaterialNum().subtract(param));
-            materialMapper.updateMaterial(material);
-        }
     }
 
     private Product createInsertProduct(ProductInsertVO vo) {
@@ -120,11 +112,12 @@ public class ProductService {
 
     public void delete(String productId, String updateTime) {
         Product product = productMapper.get(productId);
-        //Validator.equals(updateTime, product.getUpdateTime(), "原料信息已过时，可能已被其他人更新");
         Map<String, String> mapperParam = new HashMap<>(2);
         mapperParam.put("productId", productId);
         mapperParam.put("updateUser", SecurityUtil.getUserId());
         productMapper.delete(mapperParam);
+
+        /*
         //恢复原料数据
         List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(product.getProductTempId());
         for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
@@ -135,11 +128,56 @@ public class ProductService {
             material.setMaterialNum(material.getMaterialNum().add(param));
             materialMapper.updateMaterial(material);
         }
-
+         */
     }
 
     public Product get(String productId) {
         return productMapper.get(productId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void productStorage(ProductInsertVO vo) {
+        //入库产品数量
+        Product product = productMapper.get(vo.getProductId());
+        if (product != null) {
+            product.setProductNum(product.getProductNum() + Integer.valueOf(vo.getProductNum()));
+            productMapper.updateProduct(product);
+            //修改对应的原料的数量
+            //获取对应的模板信息
+            List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(vo.getProductTempId());
+            for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
+                Material material = materialMapper.get(productTempMaterial.getMaterialId());
+                //param=模板中的原料数量*产品数量
+                BigDecimal param = productTempMaterial.getMaterialNum().multiply(new BigDecimal(vo.getProductNum()));
+                //原料剩余-param
+                material.setMaterialNum(material.getMaterialNum().subtract(param));
+                materialMapper.updateMaterial(material);
+            }
+        }else {
+            throw new BusinessException("数据异常,请联系管理员.");
+        }
+    }
+
+    public void productOutgoing(ProductInsertVO vo) {
+        Product product = productMapper.get(vo.getProductId());
+        if (product != null) {
+            if (product.getProductNum() <= 0) {
+                throw new BusinessException("该产品库存不足,请先入库产品.");
+            } else {
+                product.setProductNum(product.getProductNum() - Integer.valueOf(vo.getProductNum()));
+            }
+            productMapper.updateProduct(product);
+        }else {
+            throw new BusinessException("数据异常,请联系管理员.");
+        }
+    }
+
+    public void productInitExport(HttpServletResponse response) {
+
+    }
+
+    public void productInitImport(MultipartFile file) {
+
     }
 }
 

@@ -16,8 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -85,5 +87,36 @@ public class ProductController {
         return productService.find(product);
     }
 
+    @ApiOperation(value = "产品入库")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @LogAction(value = "产品入库")
+    @PostMapping(value = "/productStorage")
+    public void productStorage(@ApiParam(value = "Product json对象") @RequestBody ProductInsertVO vo) {
+        productService.productStorage(vo);
+    }
 
+    @ApiOperation(value = "产品出库")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @LogAction(value = "产品出库")
+    @PostMapping(value = "/productOutgoing")
+    public void productOutgoing(@ApiParam(value = "Product json对象") @RequestBody ProductInsertVO vo) {
+        productService.productOutgoing(vo);
+    }
+
+    @ApiOperation(value = "产品初始导出")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @LogAction(value = "产品初始导出")
+    @GetMapping(value = "/productInitExport")
+    public void add(HttpServletResponse response) {
+        productService.productInitExport(response);
+    }
+
+
+    @ApiOperation(value = "产品初始导入")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @LogAction(value = "产品初始导入")
+    @GetMapping(value = "/productInitImport")
+    public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file) {
+        productService.productInitImport(file);
+    }
 }

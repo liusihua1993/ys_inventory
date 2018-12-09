@@ -44,6 +44,9 @@
             <if test="productName != null">
                 product_name=#{productName},
             </if>
+            <if test="productNum != null">
+                product_num=#{productNum},
+            </if>
             <if test="productDescription != null">
                 product_description=#{productDescription},
             </if>

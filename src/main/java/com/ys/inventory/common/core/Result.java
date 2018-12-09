@@ -1,12 +1,16 @@
 package com.ys.inventory.common.core;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @param <T> 请求响应结构体
  * @author wyh
  */
 @Data
+@Getter
+@Setter
 public final class Result<T> {
 
     /**
