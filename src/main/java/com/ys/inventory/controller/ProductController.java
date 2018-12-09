@@ -72,7 +72,6 @@ public class ProductController {
 
     @ApiOperation(value = "根据主键查询对象")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Product.class)})
-    @LogAction(value = "查看产品详情")
     @GetMapping("/{productId}")
     public Product detail(@ApiParam(value = "主键id") @PathVariable String productId) {
         return productService.get(productId);
@@ -81,7 +80,6 @@ public class ProductController {
 
     @ApiOperation(value = "查询全部")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Product.class)})
-    @LogAction(value = "查看产品列表")
     @GetMapping
     public Page<Product> find(@ApiParam("查询条件") ProductSearchVO product) {
         return productService.find(product);
@@ -107,7 +105,8 @@ public class ProductController {
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @LogAction(value = "产品初始导出")
     @GetMapping(value = "/productInitExport")
-    public void add(HttpServletResponse response) {
+    public void productInitExport(HttpServletResponse response) {
+        //todo
         productService.productInitExport(response);
     }
 
@@ -117,6 +116,7 @@ public class ProductController {
     @LogAction(value = "产品初始导入")
     @GetMapping(value = "/productInitImport")
     public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file) {
+        //todo
         productService.productInitImport(file);
     }
 }

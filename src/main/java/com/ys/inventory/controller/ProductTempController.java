@@ -58,7 +58,6 @@ public class ProductTempController {
 
     @ApiOperation(value = "根据主键查询产品模板")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = ProductTemp.class)})
-    @LogAction(value = "查看产品模板详情")
     @GetMapping("/{productTempId}")
     public ProductTemp get(@ApiParam(value = "主键id") @PathVariable String productTempId) {
         return productTempService.get(productTempId);
@@ -75,7 +74,6 @@ public class ProductTempController {
 
     @ApiOperation(value = "查询全部产品模板")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = ProductTemp.class)})
-    @LogAction(value = "查看产品模板列表")
     @GetMapping
     public Page<ProductTemp> find(@ApiParam(value = "查询json")ProductTempSearchVO vo) {
         return productTempService.find(vo);

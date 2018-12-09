@@ -62,7 +62,6 @@ public class MaterialController {
 
     @ApiOperation(value = "根据主键查询原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Material.class)})
-    @LogAction(value = "查看原料详情")
     @GetMapping(value = "/{materialId}")
     public Material get(@ApiParam (value="主键id") @PathVariable String materialId) {
         return materialService.get(materialId);
@@ -80,7 +79,6 @@ public class MaterialController {
 
     @ApiOperation(value = "查询全部原料")
     @ApiResponses({ @ApiResponse(code = 200, message = "操作成功", response=Material.class)})
-    @LogAction(value = "查看原料列表")
     @GetMapping
     public Page<Material> find(@ApiParam("查询条件") MaterialSearchVO material) {
         return materialService.find(material);
