@@ -32,6 +32,36 @@
             '0'
             )
     </insert>
+
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        replace into material (
+        material_id,
+        material_name,
+        material_num,
+        material_description,
+        create_time,
+        create_user,
+        update_time,
+        update_user,
+        delete_flag
+        )
+        values
+        <foreach item="st" collection="list" open="" separator="," close="">
+            (
+            #{materialId},
+            #{materialName},
+            #{materialNum},
+            #{materialDescription},
+            now(),
+            #{createUser},
+            now(),
+            #{createUser},
+            '0'
+            )
+        </foreach>
+    </insert>
+
     <update id="updateMaterial" parameterType="Material">
         update material
         <set>
