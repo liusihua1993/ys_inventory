@@ -15,7 +15,6 @@
     <insert id="insert" parameterType="Product">
       insert into product (
         product_id,
-        product_temp_id,
         product_name,
         product_description,
         product_num,
@@ -27,7 +26,6 @@
       )
       values (
         #{productId},
-        #{productTempId},
         #{productName},
         #{productDescription},
         #{productNum},
@@ -38,6 +36,36 @@
         '0'
       )
   </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        replace into product (
+        product_id,
+        product_name,
+        product_description,
+        product_num,
+        create_time,
+        create_user,
+        update_time,
+        update_user,
+        delete_flag
+        )
+        values
+        <foreach item="st" collection="list" open="" separator="," close="">
+            (
+            #{productId},
+            #{productName},
+            #{productDescription},
+            #{productNum},
+            now(),
+            #{createUser},
+            now(),
+            #{createUser},
+            '0'
+            )
+        </foreach>
+    </insert>
+
+
     <update id="updateProduct" parameterType="Product">
         update product
         <set>

@@ -4,7 +4,6 @@ package com.ys.inventory.controller;
 import com.ys.inventory.common.core.Result;
 import com.ys.inventory.common.utils.Page;
 import com.ys.inventory.entity.Product;
-import com.ys.inventory.mapper.ProductMapper;
 import com.ys.inventory.service.ProductService;
 import com.ys.inventory.system.log.annotation.LogAction;
 import com.ys.inventory.system.log.annotation.LogModule;
@@ -14,12 +13,9 @@ import com.ys.inventory.vo.ProductUpdateVO;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -36,9 +32,6 @@ public class ProductController {
 
     @Resource
     private ProductService productService;
-
-    @Autowired(required = false)
-    private ProductMapper ProductMapper;
 
 
     @ApiOperation(value = "产品添加")
@@ -101,22 +94,5 @@ public class ProductController {
         productService.productOutgoing(vo);
     }
 
-    @ApiOperation(value = "产品初始导出")
-    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
-    @LogAction(value = "产品初始导出")
-    @GetMapping(value = "/productInitExport")
-    public void productInitExport(HttpServletResponse response) {
-        //todo
-        productService.productInitExport(response);
-    }
 
-
-    @ApiOperation(value = "产品初始导入")
-    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
-    @LogAction(value = "产品初始导入")
-    @GetMapping(value = "/productInitImport")
-    public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file) {
-        //todo
-        productService.productInitImport(file);
-    }
 }

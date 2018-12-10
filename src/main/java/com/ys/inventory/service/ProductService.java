@@ -23,9 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -170,14 +168,6 @@ public class ProductService {
         }else {
             throw new BusinessException("数据异常,请联系管理员.");
         }
-    }
-
-    public void productInitExport(HttpServletResponse response) {
-
-    }
-
-    public void productInitImport(MultipartFile file) {
-
     }
 }
 
