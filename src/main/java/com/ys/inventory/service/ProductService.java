@@ -61,7 +61,6 @@ public class ProductService {
         Product product = new Product();
         product.setCreateUser(SecurityUtil.getUserId());
         product.setProductId(UUIDUtil.getUUID());
-        product.setProductTempId(vo.getProductTempId());
         product.setProductName(vo.getProductName());
         product.setProductDescription(vo.getProductDescription());
         product.setProductNum(Integer.parseInt(vo.getProductNum()));

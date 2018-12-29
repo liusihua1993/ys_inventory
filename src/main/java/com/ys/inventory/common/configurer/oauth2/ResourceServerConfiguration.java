@@ -2,6 +2,7 @@ package com.ys.inventory.common.configurer.oauth2;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -38,6 +39,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
      */
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/excel/productInitImport","/excel/materialInitImport").permitAll();
         httpSecurity
                 .cors()
                 .and()
@@ -45,7 +48,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html","/excel/*")
+                .antMatchers("/swagger-ui.html","/excel/productInitExport","/excel/materialInitExport")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.export.styler.ExcelExportStylerBorderImpl;
 import com.ys.inventory.common.exception.BusinessException;
 import com.ys.inventory.common.utils.ExcelUtil;
+import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.Utils;
 import com.ys.inventory.dto.MaterialExcel;
 import com.ys.inventory.dto.ProductExcel;
@@ -49,7 +50,7 @@ public class ExcelService {
         }
     }
 
-    public void productInitImport(MultipartFile file, String userId) throws Exception {
+    public void productInitImport(MultipartFile file) throws Exception {
         if (file == null) {
             throw new BusinessException("上传文件内容为空");
         }
@@ -61,7 +62,7 @@ public class ExcelService {
             product.setProductName(productExcel.getProductName());
             product.setProductNum(productExcel.getProductNum());
             product.setProductDescription(productExcel.getProductDescription());
-            product.setCreateUser(userId);
+            product.setCreateUser(SecurityUtil.getUserId());
             products.add(product);
         }
         productMapper.insertBatch(products);
@@ -79,7 +80,7 @@ public class ExcelService {
         }
     }
 
-    public void materialInitImport(MultipartFile file, String userId) throws Exception {
+    public void materialInitImport(MultipartFile file) throws Exception {
         if (file == null) {
             throw new BusinessException("上传文件内容为空");
         }
@@ -91,7 +92,7 @@ public class ExcelService {
             material.setMaterialName(materialExcel.getMaterialName());
             material.setMaterialNum(materialExcel.getMaterialNum());
             material.setMaterialDescription(materialExcel.getMaterialDescription());
-            material.setCreateUser(userId);
+            material.setCreateUser(SecurityUtil.getUserId());
             materialExcels.add(material);
         }
         materialMapper.insertBatch(materialExcels);

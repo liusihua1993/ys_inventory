@@ -86,17 +86,14 @@
     <select id="get" parameterType="String" resultType="Product">
           SELECT
           p.product_id,
-          p.product_temp_id,
           p.product_name,
           p.product_description,
           p.product_num,
           p.create_time,
           (select u.user_name from user u where u.user_id = p.create_user) create_user,
-          u.user_name,
-          pt.product_temp_name
+          u.user_name
       FROM
-          product p LEFT JOIN product_temp pt ON p.product_temp_id = pt.product_temp_id
-                    LEFT JOIN user u ON p.create_user = u.user_id
+          product p LEFT JOIN user u ON p.create_user = u.user_id
       WHERE
           product_id = #{productId,jdbcType=VARCHAR}
           AND p.delete_flag = '0'
@@ -115,7 +112,6 @@
     <select id="find" resultType="Product">
     select
       product_id,
-      product_temp_id,
       product_name,
       product_description,
       product_num,

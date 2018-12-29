@@ -38,8 +38,8 @@ public class ExcelController {
     @ApiOperation(value = "产品初始导入")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @PostMapping(value = "/productInitImport")
-    public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file, String userId) throws Exception {
-        excelService.productInitImport(file, userId);
+    public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        excelService.productInitImport(file);
     }
 
 
@@ -53,7 +53,7 @@ public class ExcelController {
     @ApiOperation(value = "原料初始导入")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @PostMapping(value = "/materialInitImport")
-    public void materialInitImport(@RequestParam(value = "file", required = false) MultipartFile file, String userId) throws Exception {
-        excelService.materialInitImport(file, userId);
+    public void materialInitImport(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        excelService.materialInitImport(file);
     }
 }

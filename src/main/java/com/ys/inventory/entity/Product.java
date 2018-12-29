@@ -20,11 +20,6 @@ public class Product extends BaseEntity {
     private String productId;
 
     /**
-     * 使用产品模板id
-     */
-    private String productTempId;
-
-    /**
      * 产品名称
      */
     private String productName;
