@@ -20,4 +20,6 @@ public interface ProductMapper {
     void delete(Map<String, String> mapperParam);
 
     void insertBatch(ArrayList<Product> products);
+
+    boolean isNotExistProduct(String productName);
 }

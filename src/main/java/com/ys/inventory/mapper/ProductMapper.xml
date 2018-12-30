@@ -37,6 +37,13 @@
       )
   </insert>
 
+    <select id="isNotExistProduct" parameterType="string" resultType="boolean">
+        <![CDATA[
+          select count(product_id) from product where product_name=#{productName}
+        ]]>
+    </select>
+
+
     <insert id="insertBatch" parameterType="java.util.List">
         replace into product (
         product_id,

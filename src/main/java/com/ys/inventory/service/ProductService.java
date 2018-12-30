@@ -53,6 +53,11 @@ public class ProductService {
     public void insert(ProductInsertVO vo) {
         // 插入验证
         ValidatorInsert(vo);
+        //是否存在重名产品
+        boolean flag = productMapper.isNotExistProduct(vo.getProductName());
+        if (flag) {
+            throw new BusinessException("产品已经存在,请尝试进行入库、出库等操作.");
+        }
         //产品信息入库
         productMapper.insert(createInsertProduct(vo));
     }
@@ -70,7 +75,7 @@ public class ProductService {
     private void ValidatorInsert(ProductInsertVO vo) {
         // 原料名称
         Validator.notNull(vo.getProductName(), "产品名称不能为空");
-        checkLength(vo.getProductName(), 30, "公司名称长度不得超过 30 个字符");
+        checkLength(vo.getProductName(), 30, "产品名称长度不得超过 30 个字符");
         // 原料数量
         Validator.notNull(vo.getProductNum(), "个数不能为空");
         if (!vo.getProductNum().matches(Constants.REGEX_POSITIVE_INTEGER) || vo.getProductNum().length() > Integer.valueOf(Constants.SIX)) {

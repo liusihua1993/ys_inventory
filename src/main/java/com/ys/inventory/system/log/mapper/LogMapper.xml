@@ -20,7 +20,7 @@
        from log l
       where delete_flag = '0' and content IS NOT null
       <if test="moduleName != null and moduleName != ''">
-        and module_name = #{moduleName}
+        and module_name like concat('%', #{moduleName},'%')
       </if>
       <if test="operator != null and operator != ''">
         and operator like concat('%', #{operator},'%')
