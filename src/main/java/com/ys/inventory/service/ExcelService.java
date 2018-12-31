@@ -54,7 +54,12 @@ public class ExcelService {
         if (file == null) {
             throw new BusinessException("上传文件内容为空");
         }
-        List<ProductExcel> productExcelList = ExcelUtil.importExcel(file, 0, 1, ProductExcel.class);
+        List<ProductExcel> productExcelList = null;
+        try {
+            productExcelList = ExcelUtil.importExcel(file, 0, 1, ProductExcel.class);
+        } catch (Exception e) {
+            throw new BusinessException("请使用数据模板进行上传");
+        }
         ArrayList<Product> products = new ArrayList<>();
         for (ProductExcel productExcel : productExcelList) {
             Product product = new Product();
@@ -84,7 +89,12 @@ public class ExcelService {
         if (file == null) {
             throw new BusinessException("上传文件内容为空");
         }
-        List<MaterialExcel> materialExcelList = ExcelUtil.importExcel(file, 0, 1, MaterialExcel.class);
+        List<MaterialExcel> materialExcelList = null;
+        try {
+            materialExcelList = ExcelUtil.importExcel(file, 0, 1, MaterialExcel.class);
+        } catch (Exception e) {
+            throw new BusinessException("请使用数据模板进行上传");
+        }
         ArrayList<Material> materialExcels = new ArrayList<>();
         for (MaterialExcel materialExcel : materialExcelList) {
             Material material = new Material();
@@ -96,8 +106,5 @@ public class ExcelService {
             materialExcels.add(material);
         }
         materialMapper.insertBatch(materialExcels);
-
-
-
     }
 }

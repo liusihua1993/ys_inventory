@@ -49,14 +49,14 @@
         values
         <foreach item="st" collection="list" open="" separator="," close="">
             (
-            #{materialId},
-            #{materialName},
-            #{materialNum},
-            #{materialDescription},
+            #{st.materialId},
+            #{st.materialName},
+            #{st.materialNum},
+            #{st.materialDescription},
             now(),
-            #{createUser},
+            #{st.createUser},
             now(),
-            #{createUser},
+            #{st.createUser},
             '0'
             )
         </foreach>
