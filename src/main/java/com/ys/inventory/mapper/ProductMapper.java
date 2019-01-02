@@ -1,5 +1,6 @@
 package com.ys.inventory.mapper;
 
+import com.ys.inventory.dto.ProductStockExcel;
 import com.ys.inventory.entity.Product;
 import com.ys.inventory.vo.ProductSearchVO;
 
@@ -22,4 +23,6 @@ public interface ProductMapper {
     void insertBatch(ArrayList<Product> products);
 
     boolean isNotExistProduct(String productName);
+
+    ArrayList<ProductStockExcel> productStockExport();
 }

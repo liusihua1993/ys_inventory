@@ -81,20 +81,22 @@ public class SystemLogAspect {
                 vo.setContent(md.value());
             }
             UserDetailsVO user = SecurityUtil.getUser();
-            vo.setUserId(user.getId());
-            if(StringUtils.contains(user.getUsername(),",")){
-                vo.setOperator(StringUtils.substringAfter(user.getUsername(),","));
-            }else{
-                vo.setOperator(user.getUsername());
-            }
-            vo.setIp(ip);
-            vo.setCreateUser(user.getId());
+            if(user!=null){
+                vo.setUserId(user.getId());
+                if(StringUtils.contains(user.getUsername(),",")){
+                    vo.setOperator(StringUtils.substringAfter(user.getUsername(),","));
+                }else{
+                    vo.setOperator(user.getUsername());
+                }
+                vo.setIp(ip);
+                vo.setCreateUser(user.getId());
 
-            afterTime = System.currentTimeMillis();
-            float consumeTime = (afterTime - beforeTime) / 1000f;
-            // 执行方法耗时时间
-            vo.setConsumeTime(consumeTime);
-            service.insert(vo);
+                afterTime = System.currentTimeMillis();
+                float consumeTime = (afterTime - beforeTime) / 1000f;
+                // 执行方法耗时时间
+                vo.setConsumeTime(consumeTime);
+                service.insert(vo);
+            }
         } catch (Exception e) {
             // 记录本地异常日志
             log.warn("日志记录异常信息：", e);

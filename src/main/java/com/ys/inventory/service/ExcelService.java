@@ -8,6 +8,7 @@ import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.Utils;
 import com.ys.inventory.dto.MaterialExcel;
 import com.ys.inventory.dto.ProductExcel;
+import com.ys.inventory.dto.ProductStockExcel;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.entity.Product;
 import com.ys.inventory.mapper.MaterialMapper;
@@ -110,5 +111,17 @@ public class ExcelService {
             }
         }
         materialMapper.insertBatch(materialExcels);
+    }
+
+    public void productStockExport(HttpServletResponse response) {
+        ArrayList<ProductStockExcel> list = productMapper.productStockExport();
+        try {
+            ExportParams exportParams = new ExportParams();
+            exportParams.setSheetName("产品库存");
+            exportParams.setStyle(ExcelExportStylerBorderImpl.class);
+            ExcelUtil.exportExcel(list, exportParams, ProductStockExcel.class, "产品库存.xls", response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

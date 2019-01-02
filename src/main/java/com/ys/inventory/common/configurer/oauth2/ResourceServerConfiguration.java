@@ -48,7 +48,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html","/excel/productInitExport","/excel/materialInitExport")
+                .antMatchers("/swagger-ui.html","/excel/*")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

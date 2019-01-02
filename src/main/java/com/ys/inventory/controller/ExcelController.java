@@ -34,6 +34,12 @@ public class ExcelController {
         excelService.productInitExport(response);
     }
 
+    @ApiOperation(value = "产品库存导出")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @GetMapping(value = "/productStockExport")
+    public void productStockExport(HttpServletResponse response) {
+        excelService.productStockExport(response);
+    }
 
     @ApiOperation(value = "产品初始导入")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
@@ -41,7 +47,6 @@ public class ExcelController {
     public void productInitImport(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         excelService.productInitImport(file);
     }
-
 
     @ApiOperation(value = "原料初始导出")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
