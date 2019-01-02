@@ -55,6 +55,13 @@ public class ExcelController {
         excelService.materialInitExport(response);
     }
 
+    @ApiOperation(value = "原料库存导出")
+    @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
+    @GetMapping(value = "/materialStockExport")
+    public void materialStockExport(HttpServletResponse response) {
+        excelService.materialStockExport(response);
+    }
+
     @ApiOperation(value = "原料初始导入")
     @ApiResponses({@ApiResponse(code = 200, message = "操作成功", response = Result.class)})
     @PostMapping(value = "/materialInitImport")

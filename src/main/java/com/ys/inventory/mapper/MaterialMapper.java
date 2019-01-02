@@ -1,5 +1,6 @@
 package com.ys.inventory.mapper;
 
+import com.ys.inventory.dto.MaterialStockExcel;
 import com.ys.inventory.entity.Material;
 import com.ys.inventory.vo.MaterialSearchVO;
 
@@ -59,4 +60,6 @@ public interface MaterialMapper {
 
 
     void insertBatch(ArrayList<Material> materialExcels);
+
+    ArrayList<MaterialStockExcel> materialStockExport();
 }

@@ -7,6 +7,7 @@ import com.ys.inventory.common.utils.ExcelUtil;
 import com.ys.inventory.common.utils.SecurityUtil;
 import com.ys.inventory.common.utils.Utils;
 import com.ys.inventory.dto.MaterialExcel;
+import com.ys.inventory.dto.MaterialStockExcel;
 import com.ys.inventory.dto.ProductExcel;
 import com.ys.inventory.dto.ProductStockExcel;
 import com.ys.inventory.entity.Material;
@@ -121,7 +122,19 @@ public class ExcelService {
             exportParams.setStyle(ExcelExportStylerBorderImpl.class);
             ExcelUtil.exportExcel(list, exportParams, ProductStockExcel.class, "产品库存.xls", response);
         } catch (Exception e) {
-            e.printStackTrace();
+            new BusinessException("导出异常,请联系管理员.");
+        }
+    }
+
+    public void materialStockExport(HttpServletResponse response) {
+        ArrayList<MaterialStockExcel> list = materialMapper.materialStockExport();
+        try {
+            ExportParams exportParams = new ExportParams();
+            exportParams.setSheetName("原料库存");
+            exportParams.setStyle(ExcelExportStylerBorderImpl.class);
+            ExcelUtil.exportExcel(list, exportParams, MaterialStockExcel.class, "原料库存.xls", response);
+        } catch (Exception e) {
+            new BusinessException("导出异常,请联系管理员.");
         }
     }
 }
