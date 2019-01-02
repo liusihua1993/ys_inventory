@@ -148,14 +148,19 @@ public class ProductService {
             //获取对应的模板信息
             List<ProductTempMaterial> productTempMaterialList = productTempMaterialMapper.selectByProductTempId(vo.getProductTempId());
             for (ProductTempMaterial productTempMaterial : productTempMaterialList) {
+
                 Material material = materialMapper.get(productTempMaterial.getMaterialId());
                 //param=模板中的原料数量*产品数量
                 BigDecimal param = productTempMaterial.getMaterialNum().multiply(new BigDecimal(vo.getProductNum()));
                 //原料剩余-param
+                if (material.getMaterialNum().compareTo(param) == -1) {
+                    throw new BusinessException("所需要的原料: " + material.getMaterialName() + " 不足,请先补充该原料");
+                }
+
                 material.setMaterialNum(material.getMaterialNum().subtract(param));
                 materialMapper.updateMaterial(material);
             }
-        }else {
+        } else {
             throw new BusinessException("数据异常,请联系管理员.");
         }
     }
@@ -163,13 +168,13 @@ public class ProductService {
     public void productOutgoing(ProductInsertVO vo) {
         Product product = productMapper.get(vo.getProductId());
         if (product != null) {
-            if (product.getProductNum()-Integer.valueOf(vo.getProductNum())<0) {
+            if (product.getProductNum() - Integer.valueOf(vo.getProductNum()) < 0) {
                 throw new BusinessException("该产品库存不足,请先入库产品.");
             } else {
                 product.setProductNum(product.getProductNum() - Integer.valueOf(vo.getProductNum()));
             }
             productMapper.updateProduct(product);
-        }else {
+        } else {
             throw new BusinessException("数据异常,请联系管理员.");
         }
     }
