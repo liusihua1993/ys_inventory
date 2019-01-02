@@ -62,13 +62,15 @@ public class ExcelService {
         }
         ArrayList<Product> products = new ArrayList<>();
         for (ProductExcel productExcel : productExcelList) {
-            Product product = new Product();
-            product.setProductId(Utils.getUUID());
-            product.setProductName(productExcel.getProductName());
-            product.setProductNum(productExcel.getProductNum());
-            product.setProductDescription(productExcel.getProductDescription());
-            product.setCreateUser(SecurityUtil.getUserId());
-            products.add(product);
+            if (productExcel.getProductName() != null && productExcel.getProductNum() != null) {
+                Product product = new Product();
+                product.setProductId(Utils.getUUID());
+                product.setProductName(productExcel.getProductName());
+                product.setProductNum(productExcel.getProductNum());
+                product.setProductDescription(productExcel.getProductDescription());
+                product.setCreateUser(SecurityUtil.getUserId());
+                products.add(product);
+            }
         }
         productMapper.insertBatch(products);
     }
@@ -97,13 +99,15 @@ public class ExcelService {
         }
         ArrayList<Material> materialExcels = new ArrayList<>();
         for (MaterialExcel materialExcel : materialExcelList) {
-            Material material = new Material();
-            material.setMaterialId(Utils.getUUID());
-            material.setMaterialName(materialExcel.getMaterialName());
-            material.setMaterialNum(materialExcel.getMaterialNum());
-            material.setMaterialDescription(materialExcel.getMaterialDescription());
-            material.setCreateUser(SecurityUtil.getUserId());
-            materialExcels.add(material);
+            if (materialExcel.getMaterialName() != null && materialExcel.getMaterialNum() != null) {
+                Material material = new Material();
+                material.setMaterialId(Utils.getUUID());
+                material.setMaterialName(materialExcel.getMaterialName());
+                material.setMaterialNum(materialExcel.getMaterialNum());
+                material.setMaterialDescription(materialExcel.getMaterialDescription());
+                material.setCreateUser(SecurityUtil.getUserId());
+                materialExcels.add(material);
+            }
         }
         materialMapper.insertBatch(materialExcels);
     }

@@ -163,7 +163,7 @@ public class ProductService {
     public void productOutgoing(ProductInsertVO vo) {
         Product product = productMapper.get(vo.getProductId());
         if (product != null) {
-            if (product.getProductNum() <= 0) {
+            if (product.getProductNum()-Integer.valueOf(vo.getProductNum())<0) {
                 throw new BusinessException("该产品库存不足,请先入库产品.");
             } else {
                 product.setProductNum(product.getProductNum() - Integer.valueOf(vo.getProductNum()));

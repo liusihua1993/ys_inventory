@@ -14,7 +14,7 @@ spring:
     name: inventory-service
   #数据库配置
   datasource:
-    url: jdbc:mysql://47.104.172.218:3306/ys?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://47.104.172.218:3306/ys_test?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 4e3w4s3a
     driver-class-name: com.mysql.jdbc.Driver

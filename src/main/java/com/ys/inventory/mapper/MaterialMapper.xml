@@ -34,7 +34,7 @@
     </insert>
 
 
-    <insert id="insertBatch" parameterType="java.util.List">
+    <insert id="insertBatch" parameterType="Material">
         replace into material (
         material_id,
         material_name,
