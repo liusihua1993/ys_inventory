@@ -90,4 +90,8 @@ public class LogService {
     public String generateFileName() {
         return "Log_" + DateUtil.getSystemDate() +".xlsx";
     }
+
+    public void deleteContentIsNull() {
+        mapper.deleteContentIsNull();
+    }
 }

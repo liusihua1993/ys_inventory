@@ -74,4 +74,8 @@
       ]]>
     </delete>
 
+  <delete id="deleteContentIsNull">
+    DELETE FROM log WHERE content is NULL
+  </delete>
+
 </mapper>

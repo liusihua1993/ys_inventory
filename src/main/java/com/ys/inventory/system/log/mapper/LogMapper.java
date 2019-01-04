@@ -34,4 +34,5 @@ public interface LogMapper {
      */
     void delete(int month);
 
+    void deleteContentIsNull();
 }

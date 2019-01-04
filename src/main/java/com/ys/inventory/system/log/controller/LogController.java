@@ -36,4 +36,11 @@ public class LogController {
     public ResponseEntity<byte[]> download(@ApiParam("查询条件") LogSearchVO vo) throws Exception{
         return DownloadUtil.download(service.downloadFile(vo),service.generateFileName());
     }
+
+    @ApiOperation(value = "删除无效日志")
+    @GetMapping(value = "/deleteContentIsNull")
+    public Result deleteContentIsNull() throws Exception{
+        service.deleteContentIsNull();
+        return Result.ok();
+    }
 }
