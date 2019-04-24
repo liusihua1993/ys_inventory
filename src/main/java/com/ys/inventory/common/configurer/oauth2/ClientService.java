@@ -23,8 +23,8 @@ public class ClientService implements ClientDetailsService {
                 "refresh_token"
         ));
         baseClientDetails.setScope(Sets.newHashSet("all"));
-        // 10分钟
-        baseClientDetails.setAccessTokenValiditySeconds(60 * 100);
+        // 2天
+        baseClientDetails.setAccessTokenValiditySeconds(60 * 60 * 24 * 7);
         // 24小时
         baseClientDetails.setRefreshTokenValiditySeconds(60 * 60 * 24);
         return baseClientDetails;
