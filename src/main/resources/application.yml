@@ -1,63 +1,26 @@
-#服务器配置
-server:
-  #端口
-  port: 8087
-  #启动压缩
-  compression:
-    enabled: true
-
 #spring配置
 spring:
   #应用配置
   application:
     #名称:
     name: inventory-service
-  #数据库配置
-  datasource:
-    url: jdbc:mysql://47.104.172.218:3306/ys_test?useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: 4e3w4s3a
-    driver-class-name: com.mysql.jdbc.Driver
-  #redis
-  redis:
-    host: 47.104.172.218
-    port: 6379
-    password: liusihua6666
-    # 连接池最大连接数（使用负值表示没有限制）
-    pool.max-active: -1
-    # 连接池最大阻塞等待时间（使用负值表示没有限制）
-    pool.max-wait: -1
-    # 连接池中的最大空闲连接
-    pool.max-idle: 8
-    # 连接池中的最小空闲连接
-    pool.min-idle: 0
-    # 连接超时时间（毫秒）
-    timeout: 0
-
+  profiles:
+    active: prod
+  #    active: dev
   #404交给异常处理器处理
   mvc:
     throw-exception-if-no-handler-found: true
   resources:
     add-mappings: false
+  http:
+      multipart:
+        max-file-size: 200Mb
+        max-request-size: 2000Mb
 
 #mybatis
 mybatis:
   typeAliasesPackage: com.**.**.entity
   mapperLocations: classpath:com/**/**/mapper/*.xml
-
-#日志级别
-logging:
-  level:
-    com:
-      mlink: debug
-
-#swagger
-pringfox:
-  documentation:
-    swagger:
-      v2:
-        path: /api-docs
-
 ##服务器发现注册配置
 #eureka:
 #  client:
